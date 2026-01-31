@@ -4,6 +4,8 @@
 
 ## About me
 
-My name is Clarence Dagins. I'm a senior engineering student studying computer science. I'm passionate about robotics, especially in its intersections with formal verification methods and theory, and I'd like to pursue these research interests in graduate school. Outside of academics, I enjoy personal electronics projects, automotive work, outdoor activities, old-school arcade fighting games, and cats. I'm also a big fan of Star Wars if that wasn't already obvious.
+INSERT PICTURE HERE
+
+My name is Clarence Dagins. I'm a senior engineering student studying computer science. I'm passionate about robotics, especially in its intersections with formal verification methods and CS theory, and I look forward to pursuing these interests in graduate school. Outside of academics, I enjoy personal electronics projects, automotive work, outdoor activities, old-school arcade fighting games, and cats. I'm also a big fan of Star Wars if that wasn't already obvious.
 
 It's been a long time since I've done any web design... this will hopefully look nicer as the year progresses.
