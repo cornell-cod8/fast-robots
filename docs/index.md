@@ -1,7 +1,5 @@
 # ECE 4160 Student Page -- Clarence Dagins (cod8)
 
-"Do not be too proud of this technological terror you've constructed." - Darth Vader
-
 ## About me
 
 ![Me](/docs/headshot.jpg)
