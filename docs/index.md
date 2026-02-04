@@ -68,7 +68,7 @@ The fourth task was to set up a notification handler in Python to receive and pr
 
 ![1b task 4](/docs/lab1/1btask4.png)
 
-For the fifth task, I set up a loop to repeatedly query for the current time in milliseconds and send the data to my laptop. I added a new command to execute this, which I simply called [FIFTH_TASK]. I wrote a for loop in Arduino to run the code for GET_TIME_MILLIS 100 times, and the time data was collected in Python with the notification handler, editing to collect the output in a list. Averaging the time differences between consecutive queries yielded an average of around 12 messages per second. 
+For the fifth task, I set up a loop to repeatedly query for the current time in milliseconds and send the data to my laptop. I added a new command to execute this, which I simply called [FIFTH_TASK]. I wrote a for loop in Arduino to run the code for GET_TIME_MILLIS 100 times, and the time data was collected in Python with the notification handler, editing to collect the output in a list. Averaging the time differences between consecutive queries yielded an average of around 15 messages per second. 
 
 ![fifthtask](/docs/lab1/fifthtask.png)
 
