@@ -42,7 +42,7 @@ Before lab, I downgraded my installation of Python to 3.13 and set up a virtual 
 
 To connect the board to my laptop via Bluetooth, I updated the configuration file to match the board's MAC address and generated a new BLEService UUID to use so that I didn't mistakenly connect to anyone else's board during lab. After all of this, I reuploaded ble_arduino.ino to the board and used the provided demo.ipynb notebook to test basic BLE functionality. This was the combined list of command types I had, with the last 6 being added as I went along (described as they appear).
 
-![command types](\lab1\cmdtypes.png)
+![command types](/lab1/cmdtypes.png)
 
 To complete the following tasks, I edited the provided codebase (particularly ble_arduino.ino, updating codes in cmd_types.py as necessary) and send Python commands by adding more cells to the provided demo.ipynb Jupyter notebook. For each command sent from my laptop to the board, I had the result sent back to my laptop by updating the tx_characteristic_string in Arduino and reading the tx_esting_value field in Python. I also had the same result printed to the serial output console for debugging purposes. 
 
