@@ -90,4 +90,4 @@ For the seventh task, I added another global array called [temps] to store tempe
 
 ![1b task 7](\lab1\1btask7.png)
 
-Regarding the eighth task of comparing the results of tasks five and seven, filling the array and then sending everything at once was significantly more time efficient, sending all of the data in about 33 milliseconds. 
+Regarding the eighth task of comparing the results of tasks five and seven, filling the array and then sending everything at once was significantly more time efficient, sending all of the data in about 33 milliseconds. If each time and temperature is stored as a 4-byte float, the board can store up to 96,000 values to fill 384 kilobytes. The method from task 5 may be more time-efficient for very small numbers of measurements due to the time taken to fill the array, but this could be considered unrealistic for real-time measurements that requires high amounts of measurements for accuracy and consistency. The first method, then, seems most valuable for quick troubleshooting, while the second seems more valuable for regular data collection.
