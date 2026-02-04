@@ -22,7 +22,7 @@ The second program in Apollo3/Example4_Serial tested user interaction with the s
 
 [Serial](https://youtu.be/ly9EcbCKW0U)
 
-The third program in Apollo3/Example2_analogRead tested the onboard temperature sensor. Once this was done, the room temperature measurement was around . After holding the chip with my hands for a little while, I was able to get the reading to raise by around 12 degrees Celsius.
+The third program in Apollo3/Example2_analogRead tested the onboard temperature sensor. Once this was done, the room temperature measurement was around . After holding the chip with my hands for a little while, I was able to get the reading to raise a bit. 
 
 ![Temp1](/docs/lab1/temp1.png)
 
