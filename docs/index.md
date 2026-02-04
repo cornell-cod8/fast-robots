@@ -30,7 +30,8 @@ The third program in Apollo3/Example2_analogRead tested the onboard temperature 
 
 The fourth program in PDM/Example1_MicrophoneOutput tested the onboard microphone. As shown in the video, the resting frequency in a quiet environment was at 0, raised to a steady 351 while I was humming, and fell again afterwards. 
 
-[MicrophoneOutput](https://youtu.be/PfDuNnPpgM8)
+[![Microphone output](https://img.youtube.com/vi/PfDuNnPpgM8/0.jpg)](https://www.youtube.com/watch?v=PfDuNnPpgM8)
+
 
 ## Lab 1B
 
