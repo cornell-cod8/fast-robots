@@ -71,7 +71,7 @@ For the fifth task, I set up a loop to repeatedly query for the current time in 
 
 ![1b task 5](/docs/lab1/1btask5.png)
 
-For the sixth task, I globally defined an array of size 100 called [stamps] to store time stamps. I made a copy of the [FIFTH_TASK] loop called [SIXTH_TASK] that stores the data in the array instead of sending it directly to my laptop, and double-checked that the loop count matched the array size. I added the command [SEND_TIME_DATA] which sends each data point individually to my laptop, and I verified that everything was sent by printing all the data on the serial monitor and in Python upon receiving the data and made sure both lists were matching sets of 100 elements. 
+For the sixth task, I globally defined an array of size 100 called [stamps] to store time stamps. I made a new loop called [SIXTH_TASK] to update the array, and I added the command [SEND_TIME_DATA] to send each data point individually to my laptop. 
 
 ![sixthtask](/docs/lab1/sixthtask.png)
 
