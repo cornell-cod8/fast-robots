@@ -16,11 +16,11 @@ Before lab, I installed ArduinoIDE and the Sparkfun Apollo3 boards manager on my
 
 The first program in 01.Basics/Blink toggled an LED on/off once per second. Setup and execution was fairly straightforward. 
 
-![01.Basics/Blink](https://youtube.com/shorts/8DN68hM2iHc?feature=share) 
+[01.Basics/Blink](https://youtube.com/shorts/8DN68hM2iHc?feature=share) 
 
 The second program in Apollo3/Example4_Serial tested user interaction with the serial monitor with a simple echo program. Everything the robot received as input was returned through the serial monitor output. 
 
-![Serial](https://youtu.be/ly9EcbCKW0U)
+[Serial](https://youtu.be/ly9EcbCKW0U)
 
 The third program in Apollo3/Example2_analogRead tested the onboard temperature sensor. Once this was done, the room temperature measurement was around . After holding the chip with my hands for a little while, I was able to get the reading to raise to around ____. 
 
@@ -30,7 +30,7 @@ The third program in Apollo3/Example2_analogRead tested the onboard temperature 
 
 The fourth program in PDM/Example1_MicrophoneOutput tested the onboard microphone. As shown in the video, the resting frequency in a quiet environment was at 0, raised to a steady 351 while I was humming, and fell again afterwards. 
 
-![MicrophoneOutput](https://youtu.be/PfDuNnPpgM8)
+[MicrophoneOutput](https://youtu.be/PfDuNnPpgM8)
 
 ## Lab 1B
 
