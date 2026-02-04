@@ -12,7 +12,7 @@ It's been a long time since I've done any web design, so I'm not too proud of th
 
 The first half of this lab was just getting familiar with using the Artemis board. For this part, I did not collaborate with anyone. 
 
-Before lab, I installed ArduinoIDE and the Sparkfun Apollo3 boards manager on my computer to send programs to the board. The setup itself was fairly simple: I had the board connected to my laptop with ArduinoIDE open with a USB-C cable. The rest of lab involved running simple tests and sample programs to confirm functionality of communication with my laptop and of onboard sensors. 
+Before lab, I installed ArduinoIDE and the Sparkfun Apollo3 boards manager on my computer to send programs to the board. This part of lab primarly involved running simple tests and sample programs to confirm functionality of communication with my laptop and of onboard sensors. 
 
 The first program in 01.Basics/Blink toggled an LED on/off once per second. Setup and execution was fairly straightforward. 
 
@@ -38,11 +38,11 @@ Lab 1B
 
 This part of the lab familiarized us with wireless communication with the Artemis board via Bluetooth stack, and sending Python commands to the board to execute Arduino code. For this section, I briefly discussed coding strategies during lab section with Rajarshi Das and Rushika Prasad, but did not collaborate with anyone otherwise. 
 
-Before lab, I downgraded my installation of Python to 3.13 and set up a virtual environment to use for the course with the following packages: numpy, pyyaml, colorama, nest_asyncio, bleak, and jupyterlab. After downloading the codebase into my project directory, I installed ArduinoBLE in the ArduinoIDE, loaded and burned the provided ble_arduino.ino sketch from the codebase, and started the Jupyter server to send Python commands to the board during the lab. After updating the configuration file witih the board MAC address and a fresh BLEService UUID, I reuploaded ble_arduino.ino to the board and used the provided demo.ipynb notebook to test basic BLE functionality. This was the combined list of command types I had, with the last 6 being added as I went along (described as they appear).
+After downloading the codebase into my project directory, I installed ArduinoBLE in the ArduinoIDE, loaded and burned the provided ble_arduino.ino sketch from the codebase, and started the Jupyter server to send Python commands to the board during the lab. After updating the configuration file witih the board MAC address and a fresh BLEService UUID, I reuploaded ble_arduino.ino to the board and used the provided demo.ipynb notebook to test basic BLE functionality. This was the combined list of command types I had, with the last 6 being added as I went along (described as they appear).
 
 ![command types](/docs/lab1/cmdtypes.png)
 
-To complete the following tasks, I edited the provided codebase (particularly ble_arduino.ino, updating codes in cmd_types.py as necessary) and send Python commands by adding more cells to the provided demo.ipynb Jupyter notebook. For each command sent from my laptop to the board, I had the result sent back to my laptop by updating the tx_characteristic_string in Arduino and reading the tx_esting_value field in Python. 
+To complete the following tasks, I added to the codebase and send Python commands in the same demo.ipynb Jupyter notebook. I had command results sent back to my laptop by updating the tx_characteristic_string in Arduino and reading the tx_esting_value field in Python. 
 
 The first task was to implement and test the [ECHO] command. My code updated the tx_characteristic_string object with the necessary code to return, which was simply the input code with a brief string prefix. The string was then sent back to the Python code in the Jupyter notebook.
 
@@ -62,7 +62,7 @@ The third task was to implement and test [GET_TIME_MILLIS], which takes no input
 
 ![1b task 3](/docs/lab1/1btask3.png)
 
-The fourth task was to set up a notification handler in Python to receive and process queries to [GET_TIME_MILLIS] by extracting the time from the return string. My Python function used the [start_notify] function to start running a thread to execute a custom notification handler. The handler took in the uuid string object and the bytearray of the characteristic value, converted that bytearray to a string representation, and printed it to the notebook. As written, my handler only tries to extract time when the updated string starts with the "T: " prefix exclusively generated from [GET_TIME_MILLIS]. 
+The fourth task was to set up a notification handler in Python to receive and process queries to [GET_TIME_MILLIS] by extracting the time from the return string. My Python function used the [start_notify] function to start running a thread to execute a custom notification handler that converted that bytearray to a string representation and printed it to the notebook whenever it reads a time string. 
 
 ![1b task 4](/docs/lab1/1btask4.png)
 
@@ -80,7 +80,7 @@ For the sixth task, I globally defined an array of size 100 called [stamps] to s
 
 ![1b task 6](/docs/lab1/1btask6.png)
 
-For the seventh task, I added another global array called [temps] to store temperature data, and made another copy of the same loop called [SEVENTH_TASK], which performs the same actions as [SIXTH_TASK], but every update to [stamps] also checks the measured temperature and updates [temps]. I added another command called [GET_TEMP_READINGS] that sends the [stamps] data followed by the [temps] data, prepended each data point with either "Stamp: " or "Temp: ", and edited the handler to maintain two separate lists and add each data point to the right list in the right order. 
+For the seventh task, I added another global array called [temps] to store temperature data, and made another copy of the same loop called [SEVENTH_TASK], which performs the same actions as [SIXTH_TASK], but every update to [stamps] also checks the measured temperature and updates [temps]. I added another command called [GET_TEMP_READINGS] that sends the [stamps] data followed by the [temps] data, and made a new handler to maintain two separate lists and add each data point to the right list in the right order. 
 
 ![seventhtask](/docs/lab1/seventhtask.png)
 
