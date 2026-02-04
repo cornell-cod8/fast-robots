@@ -16,7 +16,7 @@ Before lab, I installed ArduinoIDE and the Sparkfun Apollo3 boards manager on my
 
 The first program in 01.Basics/Blink toggled an LED on/off once per second. Setup and execution was fairly straightforward. 
 
-![01.Basics/Blink]() 
+![01.Basics/Blink](https://youtube.com/shorts/8DN68hM2iHc?feature=share) 
 
 The second program in Apollo3/Example4_Serial tested user interaction with the serial monitor with a simple echo program. Everything the robot received as input was returned through the serial monitor output. 
 
