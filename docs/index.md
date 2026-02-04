@@ -63,11 +63,11 @@ The third task was to implement and test [GET_TIME_MILLIS], which takes no input
 
 ![1b task 3](/docs/lab1/1btask3.png)
 
-The fourth task was to set up a notification handler in Python to receive and process queries to [GET_TIME_MILLIS] by extracting the time from the return string. My Python function used the [start_notify] function to start running a thread to execute a custom notification handler that converted that bytearray to a string representation and printed it to the notebook whenever it reads a time string. 
+The fourth task was to set up a notification handler in Python to receive and process queries to [GET_TIME_MILLIS] by extracting the time from the return string. I used a call to the [start_notify] function with a custom handler to switch the bytearray to a string representation and print to the notebook whenever it reads a time string. 
 
 ![1b task 4](/docs/lab1/1btask4.png)
 
-For the fifth task, I set up a loop to repeatedly query for the current time in milliseconds and send the data to my laptop. I added a new command to execute this, which I simply called [FIFTH_TASK]. I wrote a for loop in Arduino to run the code for GET_TIME_MILLIS 100 times, and the time data was collected in Python with the notification handler, editing to collect the output in a list. Averaging the time differences between consecutive queries yielded an average of around 15 messages per second. 
+For the fifth task, I set up a loop to repeatedly query for the current time in milliseconds and send the data to my laptop. I added a new command to execute this, which I simply called [FIFTH_TASK]. I wrote a for loop in Arduino to make 100 queries and reports on times, and the data was collected with the notification handler in a list. Averaging the time differences between consecutive queries yielded an average of around 15 messages per second. 
 
 ![fifthtask](/docs/lab1/fifthtask.png)
 
