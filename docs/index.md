@@ -35,8 +35,6 @@ The fourth program in PDM/Example1_MicrophoneOutput tested the onboard microphon
 
 ## Lab 1B
 
-Lab 1B
-
 This part of the lab familiarized us with wireless communication with the Artemis board via Bluetooth stack, and sending Python commands to the board to execute Arduino code. For this section, I briefly discussed coding strategies during lab section with Rajarshi Das and Rushika Prasad, but did not collaborate with anyone otherwise. 
 
 After downloading the codebase into my project directory, I installed ArduinoBLE in the ArduinoIDE, loaded and burned the provided ble_arduino.ino sketch from the codebase, and started the Jupyter server to send Python commands to the board during the lab. After updating the configuration file witih the board MAC address and a fresh BLEService UUID, I reuploaded ble_arduino.ino to the board and used the provided demo.ipynb notebook to test basic BLE functionality. This was the combined list of command types I had, with the last 6 being added as I went along (described as they appear).
