@@ -20,7 +20,7 @@ The first program in 01.Basics/Blink toggled an LED on/off once per second. Setu
 
 The second program in Apollo3/Example4_Serial tested user interaction with the serial monitor with a simple echo program. Everything the robot received as input was returned through the serial monitor output. 
 
-[Serial](https://youtu.be/ly9EcbCKW0U)
+[![Serial](https://img.youtube.com/vi/ly9EcbCKW0U/0.jpg)](https://www.youtube.com/watch?v=ly9EcbCKW0U)
 
 The third program in Apollo3/Example2_analogRead tested the onboard temperature sensor. Once this was done, the room temperature measurement was around . After holding the chip with my hands for a little while, I was able to get the reading to raise a bit. 
 
