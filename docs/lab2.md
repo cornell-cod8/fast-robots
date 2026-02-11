@@ -12,8 +12,6 @@ Per the recommendation in the instructions, I also added a simple signal to indi
 
 In the recording below, program execution works as intended. First I show gyroscope data by rotating the IMU across all three axes, with appropriate positive increase in positive rotation directions. Then I show accelerometer data using the serial plotter, with acceleration along the X, Y, and Z axes plotted on the pink, blue, and yellow lines, respectively. As I translated and rotated the IMU with each axis, aside from some noise in the sensor readings (and my shaky hand), the sensor readings adjusted appropriately for the accelerometer and gyroscope data. 
 
-<!-- TODO: discuss acceleration/gyroscope data more...? -->
-
 [![Example1_Basics](https://img.youtube.com/vi/-GwwxylbFAQ/0.jpg)](https://www.youtube.com/watch?v=-GwwxylbFAQ)
 
 
@@ -55,6 +53,12 @@ Based on this data, it seems like a good choice for cutoff frequency might be ar
 ![filtered roll fft](/docs/lab2/filtered_roll_fft.png)
 
 # Gyroscope 
+
+For the gyroscope data, I used the differential equation from class implemented below:
+
+![gyroscope code](/docs/lab2/gyroscope_code.png)
+
+
 
 
 
