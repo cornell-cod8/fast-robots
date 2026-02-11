@@ -4,7 +4,7 @@ For this lab, we started working with the IMU sensor and the RC car.
 
 # Setup
 
-![setup](/docs/lab2/setup.png)
+![setup](/lab2/setup.png)
 
 After installing the appropriate Arduino library for the IMU and connecting it to the Artemis Nano board using QWIIC connectors, I tested its functionality using the Example1_Basics file from the Arduino library. The AD0_VAL definition refers to the last bit of the address for the IMU, which corresponds to reading or writing data, so I left it at its default value of 1. 
 
