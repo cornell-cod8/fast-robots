@@ -8,6 +8,6 @@ My name is Clarence Dagins. I'm a senior engineering student studying computer s
 
 It's been a long time since I've done any web design, so I'm not too proud of this technological terror I've constructed... this will hopefully look nicer as the year progresses.
 
-[Lab 1](/docs/lab1.md)
+[Lab 1](lab1.md)
 
-[Lab 2](/docs/lab2.md)
+[Lab 2](lab2.md)
