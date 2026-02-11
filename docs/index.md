@@ -8,83 +8,85 @@ My name is Clarence Dagins. I'm a senior engineering student studying computer s
 
 It's been a long time since I've done any web design, so I'm not too proud of this technological terror I've constructed... this will hopefully look nicer as the year progresses.
 
-## Lab 1A
+[Lab 1](/docs/lab1.md)
 
-The first half of this lab was just getting familiar with using the Artemis board. For this part, I did not collaborate with anyone. 
+## Lab 2
 
-Before lab, I installed ArduinoIDE and the Sparkfun Apollo3 boards manager on my computer to send programs to the board. This part of lab primarly involved running simple tests and sample programs to confirm functionality of communication with my laptop and of onboard sensors. 
+For this lab, we started working with the IMU sensor and the RC car. 
 
-The first program in 01.Basics/Blink toggled an LED on/off once per second. Setup and execution was fairly straightforward. 
+# Setup
 
-[![Blink](https://img.youtube.com/vi/8DN68hM2iHc/0.jpg)](https://www.youtube.com/watch?v=8DN68hM2iHc)
+![setup](/docs/lab2/setup.png)
 
-The second program in Apollo3/Example4_Serial tested user interaction with the serial monitor with a simple echo program. Everything the robot received as input was returned through the serial monitor output. 
+After installing the appropriate Arduino library for the IMU and connecting it to the Artemis Nano board using QWIIC connectors, I tested its functionality using the Example1_Basics file from the Arduino library. The AD0_VAL definition refers to the last bit of the address for the IMU, which corresponds to reading or writing data, so I left it at its default value of 1. 
 
-[![Serial](https://img.youtube.com/vi/ly9EcbCKW0U/0.jpg)](https://www.youtube.com/watch?v=ly9EcbCKW0U)
+Per the recommendation in the instructions, I also added a simple signal to indicate that the board is running. The onboard LED is set to flash 3 times at start of program execution. 
 
-The third program in Apollo3/Example2_analogRead tested the onboard temperature sensor. Once this was done, the room temperature measurement was around . After holding the chip with my hands for a little while, I was able to get the reading to raise a bit. 
+In the recording below, program execution works as intended. First I show gyroscope data by rotating the IMU across all three axes, with appropriate positive increase in positive rotation directions. Then I show accelerometer data using the serial plotter, with acceleration along the X, Y, and Z axes plotted on the pink, blue, and yellow lines, respectively. As I translated and rotated the IMU with each axis, aside from some noise in the sensor readings (and my shaky hand), the sensor readings adjusted appropriately for the accelerometer and gyroscope data. 
 
-![Temp1](/docs/lab1/temp1.png)
+<!-- TODO: discuss acceleration/gyroscope data more...? -->
 
-![Temp2](/docs/lab1/temp2.png)
-
-The fourth program in PDM/Example1_MicrophoneOutput tested the onboard microphone. As shown in the video, the resting frequency in a quiet environment was at 0, raised to a steady 351 while I was humming, and fell again afterwards. 
-
-[![Microphone output](https://img.youtube.com/vi/PfDuNnPpgM8/0.jpg)](https://www.youtube.com/watch?v=PfDuNnPpgM8)
+[![Example1_Basics](https://img.youtube.com/vi/-GwwxylbFAQ/0.jpg)](https://www.youtube.com/watch?v=-GwwxylbFAQ)
 
 
-## Lab 1B
+# Accelerometer
 
-This part of the lab familiarized us with wireless communication with the Artemis board via Bluetooth stack, and sending Python commands to the board to execute Arduino code. For this section, I briefly discussed coding strategies during lab section with Rajarshi Das and Rushika Prasad, but did not collaborate with anyone otherwise. 
+Working with the accelerometer now, my first task was to use the sensor data to find pitch and roll using the equations from class. Below I reproduce those equations:
 
-After downloading the codebase into my project directory, I installed ArduinoBLE in the ArduinoIDE, loaded and burned the provided ble_arduino.ino sketch from the codebase, and started the Jupyter server to send Python commands to the board during the lab. After updating the configuration file witih the board MAC address and a fresh BLEService UUID, I reuploaded ble_arduino.ino to the board and used the provided demo.ipynb notebook to test basic BLE functionality. This was the combined list of command types I had, with the last 6 being added as I went along (described as they appear).
+![accelerometer equations](/docs/lab2/acc_equations.png)
 
-![command types](/docs/lab1/cmdtypes.png)
+Followed by my implementation in Arduino, maintained as global variables: 
 
-To complete the following tasks, I added to the codebase and send Python commands in the same demo.ipynb Jupyter notebook. I had command results sent back to my laptop by updating the tx_characteristic_string in Arduino and reading the tx_esting_value field in Python. 
+![accelerometer code](/docs/lab2/acc_code.png)
 
-The first task was to implement and test the [ECHO] command. My code updated the tx_characteristic_string object with the necessary code to return, which was simply the input code with a brief string prefix. The string was then sent back to the Python code in the Jupyter notebook.
+And here is a short clip of my output with pitch of -90 degrees and roll of +90 degrees:
 
-![ECHO](/docs/lab1/echo.png)
+https://youtu.be/jJOOMa5cFIo?si=iSStjftr6LQj-K4M
 
-![1b task 1](/docs/lab1/1btask1.png)
+[![Pitch and roll test](https://img.youtube.com/vi/jJOOMa5cFIo/0.jpg)](https://www.youtube.com/watch?v=jJOOMa5cFIo)
 
-The second task was to implement and test the [SEND_THREE_FLOATS] command. Three floats are sent as input from my laptop, which are received by the board to be processed as float values, simply returning those values as output. 
+To evalute the accuracy of the IMU accelerometer, I measured the output of the pitch and roll functions where outputs of -90, 0, and 90 
+degrees were expected, with results displayed in the graphs below. Based on this data, the accelerometer seems to calculate the pitch and roll at these extreme values pretty accurately. I had very small mean error of less than 1 degree, so there was little need for offset adjustments. There was notably much smaller amounts of noise for roll than pitch shown on the Fast Fourier transform plots. 
 
-![sendthreefloats](/docs/lab1/sendthreefloats.png)
+![pitch plus 90](/docs/lab2/pitch_plus_90.png)
+![pitch minus 90](/docs/lab2/pitch_minus_90.png)
+![pitch fft](/docs/lab2/pitch_fft.png)
 
-![1b task 2](/docs/lab1/1btask2.png)
+![roll plus 90](/docs/lab2/roll_plus_90.png)
+![roll minus 90](/docs/lab2/roll_minus_90.png)
+![roll fft](/docs/lab2/roll_fft.png)
 
-The third task was to implement and test [GET_TIME_MILLIS], which takes no input parameters and returns the amount of time in milliseconds for which the board has been operating. In Arduino, this can be found using [millis()], so the robot command queries that function and returns the result. 
+Based on this data, it seems like a good choice for cutoff frequency might be around 5 Hz because there doesn't seem to be useful data beyond this point for either axis. Implementing a simple low-pass filter using this cutoff frequency, I had a sampling frequency of about 350, so my alpha-value for my chosen cutoff frequency came to about 0.994. There wasn't much noise in the roll measurements to begin with, so there was little change for that axis as anticipated. There was some noticeable small change in noise in the pitch readings. 
 
-![gettimemillis](/docs/lab1/gettimemillis.png)
+![filtered pitch plus 90](/docs/lab2/filtered_pitch_plus_90.png)
+![filtered pitch minus 90](/docs/lab2/filtered_pitch_minus_90.png)
+![filtered pitch fft](/docs/lab2/filtered_pitch_fft.png)
 
-![1b task 3](/docs/lab1/1btask3.png)
+![filtered roll plus 90](/docs/lab2/filtered_roll_plus_90.png)
+![filtered roll minus 90](/docs/lab2/filtered_roll_minus_90.png)
+![filtered roll fft](/docs/lab2/filtered_roll_fft.png)
 
-The fourth task was to set up a notification handler in Python to receive and process queries to [GET_TIME_MILLIS] by extracting the time from the return string. I used a call to the [start_notify] function with a custom handler to switch the bytearray to a string representation and print to the notebook whenever it reads a time string. 
+# Gyroscope 
 
-![1b task 4](/docs/lab1/1btask4.png)
 
-For the fifth task, I set up a loop to repeatedly query for the current time in milliseconds and send the data to my laptop. I added a new command to execute this, which I simply called [FIFTH_TASK]. I wrote a for loop in Arduino to make 100 queries and reports on times, and the data was collected with the notification handler in a list. Averaging the time differences between consecutive queries yielded an average of around 15 messages per second. 
 
-![fifthtask](/docs/lab1/fifthtask.png)
+# Sample Data
 
-![1b task 5](/docs/lab1/1btask5.png)
+For my data collection in this lab, I used the second approach from last lab to collect and store all the data in global arrays before sending it to my laptop via Bluetooth. After removing all print statements and removing my while-wait for IMU updates, the fastest collection I measured was around 350 datapoints collected per second. It looks like my main loop outruns the IMU data updates, as my main delay was in accounting for that update speed. 
 
-For the sixth task, I globally defined an array of size 100 called [stamps] to store time stamps. I made a new loop called [SIXTH_TASK] to update the array, and I added the command [SEND_TIME_DATA] to send each data point individually to my laptop. 
+A major contributor is likely due to the fact that this was while I was only measuring one dimension at a time for the accelerometer. I maintained 2 global 1000-element array for time and sensor data, and the Artemis had more than enough space with 384kB to store 8,000 bytes, plus three more global floats used for updating variables, for a total of 8,012 bytes. 
 
-![sixthtask](/docs/lab1/sixthtask.png)
+For the gyroscope, I recorded everything at once, but maintained three separate arrays for minor convenience. I think it would make more sense to store everything in one big array because keeping the entire array stored in one location avoids minor slow-downs from multiple searches for arrays that may be stored in multiple locations. 
 
-![sendtimedata](/docs/lab1/sendtimedata.png)
+For the data type, floats made the most sense as accuracy of data is important in state estimation, and small error can propagate to large miscalculations depending on control setting. 
 
-![1b task 6](/docs/lab1/1btask6.png)
+Below I demonstrate 5 seconds of IMU data collected at once:
 
-For the seventh task, I added another global array called [temps] to store temperature data, and made another copy of the same loop called [SEVENTH_TASK], which performs the same actions as [SIXTH_TASK], but every update to [stamps] also checks the measured temperature and updates [temps]. I added another command called [GET_TEMP_READINGS] that sends the [stamps] data followed by the [temps] data, and made a new handler to maintain two separate lists and add each data point to the right list in the right order. 
+<!-- put 5 sec video here -->
 
-![seventhtask](/docs/lab1/seventhtask.png)
+# Record a Stunt
 
-![gettempreadings](/docs/lab1/gettempreadings.png)
+I tried out the RC car to finish out the lab. It was suprrisingly easy to flip the robot over itself with forward momentum. I tried to do a wheelie, but I didn't have the delicate touch for it. I was able to get it to roll onto its side and get back up, though. 
 
-![1b task 7](/docs/lab1/1btask7.png)
+<!-- put stunt video here -->
 
-Regarding the eighth task of comparing the results of tasks five and seven, filling the array and then sending everything at once was significantly more time efficient, sending all of the data in about 33 milliseconds. If each time and temperature is stored as a 4-byte float, the board can store up to 96,000 values to fill 384 kilobytes. The method from task 5 may be more time-efficient for very small numbers of measurements due to the time taken to fill the array, but this could be considered unrealistic for real-time measurements that requires high amounts of measurements for accuracy and consistency. The first method, then, seems most valuable for quick troubleshooting, while the second seems more valuable for regular data collection.
