@@ -54,7 +54,7 @@ Based on this data, it seems like a good choice for cutoff frequency might be ar
 
 For the gyroscope data, I implemented the differential equation shown below in the subsequent code snippet: 
 
-![gyroscope equation](./lab2/gyro_equation) 
+![gyroscope equation](./lab2/gyro_equation.png) 
 
 ![gyroscope code](./lab2/gyro_code.png)
 
@@ -87,6 +87,8 @@ Below I demonstrate 5 seconds of IMU data collected at once:
 
 # Record a Stunt
 
-I tried out the RC car to finish out the lab. It was suprrisingly easy to flip the robot over itself with forward momentum. I was able to get a spinning wheelie at some point once but I was unfortunately not able to reproduce it on camera. 
+I tried out the RC car to finish out the lab. It was very difficult to control at first as it accelerated very quickly to full speed, which was convenient for long drives up and down the hallway, but not so much for the precision needed for tricks, especially with the basic controller sensitivity. 
+
+It was suprrisingly easy to flip the robot over itself with forward momentum. I was able to get a spinning wheelie, but I was unfortunately not able to reproduce it on camera. 
 
 [![Car stunt](https://img.youtube.com/vi/-nr-Zjzp4ws/0.jpg)](https://www.youtube.com/watch?v=-nr-Zjzp4ws)
