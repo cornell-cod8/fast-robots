@@ -2,16 +2,13 @@
 
 For this lab, we started working with the IMU sensor and the RC car. 
 
-
 # Setup
 
 ![setup](./lab2/setup.png)
 
-After installing the appropriate Arduino library for the IMU and connecting it to the Artemis Nano board using QWIIC connectors, I tested its functionality using the Example1_Basics file from the Arduino library. The AD0_VAL definition refers to the last bit of the address for the IMU, which corresponds to reading or writing data, so I left it at its default value of 1. 
+After installing the appropriate Arduino library for the IMU and connecting it to the Artemis Nano board using QWIIC connectors, I tested its functionality using the Example1_Basics file from the Arduino library. The AD0_VAL definition refers to the last bit of the address for the IMU for reading/writing data, so I left it at its default value of 1. I also added a simple flashing LED signal to indicate that the board is running for convenience of data measurement. 
 
-Per the recommendation in the instructions, I also added a simple signal to indicate that the board is running. The onboard LED is set to flash 3 times at start of program execution. 
-
-In the recording below, program execution works as intended. First I show gyroscope data by rotating the IMU across all three axes, with appropriate positive increase in positive rotation directions. Then I show accelerometer data using the serial plotter, with acceleration along the X, Y, and Z axes plotted on the pink, blue, and yellow lines, respectively. As I translated and rotated the IMU with each axis, aside from some noise in the sensor readings (and my shaky hand), the sensor readings adjusted appropriately for the accelerometer and gyroscope data. 
+Here, program execution works as intended. I show gyroscope data by rotating the IMU across all axes, then I show accelerometer data using the serial plotter, with acceleration along the X, Y, and Z axes plotted on the pink, blue, and yellow lines, respectively. 
 
 [![Example1_Basics](https://img.youtube.com/vi/-GwwxylbFAQ/0.jpg)](https://www.youtube.com/watch?v=-GwwxylbFAQ)
 
@@ -30,7 +27,7 @@ And here is a short clip of my output with pitch of -90 degrees and roll of +90 
 
 [![Pitch and roll test](https://img.youtube.com/vi/jJOOMa5cFIo/0.jpg)](https://www.youtube.com/watch?v=jJOOMa5cFIo)
 
-To evalute the accuracy of the IMU accelerometer, I measured the output of the pitch and roll functions where outputs of -90, 0, and 90 degrees were expected, with results displayed in the graphs below. Based on this data, the accelerometer seems to calculate the pitch and roll at these extreme values pretty accurately. I had very small mean error of less than 1 degree, so there was little need for offset adjustments, likely due to the low-pass filter already in the IMU. There was notably much smaller amounts of noise for roll than pitch shown on the Fast Fourier transform plots. 
+To evalute the accelerometer's accuracy, I measured the output of the pitch and roll functions where outputs of -90, 0, and 90 degrees were expected, with results displayed in the graphs below. Based on this data, the accelerometer seems to calculate the pitch and roll at these extreme values pretty accurately. I had very small mean error of <1 degree, so there was little need for offset adjustment, likely due to the low-pass filter already in the IMU. There was notably much smaller amounts of noise for roll than pitch shown on the Fast Fourier transform plots. 
 
 ![pitch plus 90](./lab2/pitch_plus_90.png)
 ![pitch minus 90](./lab2/pitch_minus_90.png)
@@ -40,17 +37,13 @@ To evalute the accuracy of the IMU accelerometer, I measured the output of the p
 ![roll minus 90](./lab2/roll_minus_90.png)
 ![roll fft](./lab2/roll_fft.png)
 
-Based on this data, it seems like a good choice for cutoff frequency might be around 5 Hz because there doesn't seem to be useful data beyond this point for either axis. Implementing a simple low-pass filter using this cutoff frequency, I had a sampling frequency of about 350, so my alpha-value for my chosen cutoff frequency came to about 0.994. 
+A good choice for cutoff frequency might be around 5 Hz, as there doesn't seem to be useful data beyond this point for either axis. Implementing a simple low-pass filter using this cutoff frequency, I had a sampling frequency of about 350, so my alpha-value for my chosen cutoff frequency came to about 0.994. There were minor changes in pitch readings, and almost no changes in the roll measurements, which already had little noise. 
 
 ![filtered acc](./lab2/acc_filter_code.png)
-
-There was some small, but noticeable reduction in noise in the pitch readings. 
 
 ![filtered pitch plus 90](./lab2/filtered_pitch_plus_90.png)
 ![filtered pitch minus 90](./lab2/filtered_pitch_minus_90.png)
 ![filtered pitch fft](./lab2/filtered_pitch_fft.png)
-
-There wasn't much noise in the roll measurements to begin with, so there was little change for that axis as anticipated. 
 
 ![filtered roll plus 90](./lab2/filtered_roll_plus_90.png)
 ![filtered roll minus 90](./lab2/filtered_roll_minus_90.png)
@@ -77,9 +70,9 @@ To counteract the drift, I implemented a complementary filter to combine the gyr
 
 ![complementary filter code](./lab2/complement_code.png)
 
-Compared to the previous methods, this seemed to combine the solid baseline of the accelerometer accuracy with the gyroscope precision while minimizing drift.
+Compared to the previous methods, this combined the solid baseline of the accelerometer accuracy with the gyroscope precision while minimizing drift.
 
-For demonstration, I took measurements at rest, at +90 pitch, and at -90 roll. The noise during the transition is from my rough movements. Steady behavior when held at each point was very consistent. However, at rest, I did notice an offset of around 0.5-1 degree for both roll and pitch. The pitch data was consistent with earlier data, but the roll data was farther from the true angle than the raw accelerometer data on average. 
+For demonstration, I took measurements at rest, at +90 pitch, and at -90 roll. My movements were rough, but steady behavior when held at each point was very consistent. However, at rest, I did notice an offset of around 0.5-1 degree for both roll and pitch. Pitch  data was consistent with earlier, but roll data was a bit farther from the true angle than the raw accelerometer data on average. 
 
 ![commplementary filter](./lab2/complement_rest.png)
 
@@ -90,7 +83,7 @@ For demonstration, I took measurements at rest, at +90 pitch, and at -90 roll. T
 
 # Sample Data
 
-For my data collection in this lab, I used the second approach from last lab to collect and store all the data in global arrays before sending it to my laptop via Bluetooth. After removing all print statements and removing my while-wait for IMU updates, the fastest collection I measured was around 350 datapoints collected per second. It looks like my main loop outruns the IMU data updates, as my main delay was in accounting for that update speed. 
+I used the second approach from last lab to collect and store all the data in global arrays before sending it to my laptop via Bluetooth. After removing unnecessary computations, the fastest collection I measured was around 350 datapoints collected per second. It looks like my main loop outruns the IMU data updates, as my main delay was in accounting for that update speed. 
 
 A major contributor is that I was only measuring one dimension at a time for the accelerometer. I maintained 2 global 1000-element arrays for time and sensor data, and the Artemis had more than enough space with 384kB to store 8,000 bytes, plus three more global floats used for updating variables, for a total of 8,012 bytes. 
 
@@ -104,6 +97,6 @@ The accelerometer data, as well as most of the gyroscope data, was collected wit
 
 I tried out the RC car to finish out the lab. It was very difficult to control at first as it accelerated very quickly to full speed, which was convenient for long drives up and down the hallway, but not so much for the precision needed for tricks, especially with the basic controller sensitivity. 
 
-It was suprrisingly easy to flip the robot over itself with forward momentum. I was able to get a spinning wheelie, but I was unfortunately not able to reproduce it on camera. 
+I was able to get a spinning wheelie, but I was unfortunately not able to reproduce it on camera. Here's a failed attempt:
 
 [![Car stunt](https://img.youtube.com/vi/-nr-Zjzp4ws/0.jpg)](https://www.youtube.com/watch?v=-nr-Zjzp4ws)
