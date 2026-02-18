@@ -19,44 +19,46 @@ In the recording below, program execution works as intended. First I show gyrosc
 
 Working with the accelerometer now, my first task was to use the sensor data to find pitch and roll using the equations from class. Below I reproduce those equations:
 
-![accelerometer equations](/docs/lab2/acc_equations.png)
+![accelerometer equations](/lab2/acc_equations.png)
 
 Followed by my implementation in Arduino, maintained as global variables: 
 
-![accelerometer code](/docs/lab2/acc_code.png)
+![accelerometer code](/lab2/acc_code.png)
 
 And here is a short clip of my output with pitch of -90 degrees and roll of +90 degrees:
-
-https://youtu.be/jJOOMa5cFIo?si=iSStjftr6LQj-K4M
 
 [![Pitch and roll test](https://img.youtube.com/vi/jJOOMa5cFIo/0.jpg)](https://www.youtube.com/watch?v=jJOOMa5cFIo)
 
 To evalute the accuracy of the IMU accelerometer, I measured the output of the pitch and roll functions where outputs of -90, 0, and 90 
 degrees were expected, with results displayed in the graphs below. Based on this data, the accelerometer seems to calculate the pitch and roll at these extreme values pretty accurately. I had very small mean error of less than 1 degree, so there was little need for offset adjustments. There was notably much smaller amounts of noise for roll than pitch shown on the Fast Fourier transform plots. 
 
-![pitch plus 90](/docs/lab2/pitch_plus_90.png)
-![pitch minus 90](/docs/lab2/pitch_minus_90.png)
-![pitch fft](/docs/lab2/pitch_fft.png)
+![pitch plus 90](/lab2/pitch_plus_90.png)
+![pitch minus 90](/lab2/pitch_minus_90.png)
+![pitch fft](/lab2/pitch_fft.png)
 
-![roll plus 90](/docs/lab2/roll_plus_90.png)
-![roll minus 90](/docs/lab2/roll_minus_90.png)
-![roll fft](/docs/lab2/roll_fft.png)
+![roll plus 90](/lab2/roll_plus_90.png)
+![roll minus 90](/lab2/roll_minus_90.png)
+![roll fft](/lab2/roll_fft.png)
 
 Based on this data, it seems like a good choice for cutoff frequency might be around 5 Hz because there doesn't seem to be useful data beyond this point for either axis. Implementing a simple low-pass filter using this cutoff frequency, I had a sampling frequency of about 350, so my alpha-value for my chosen cutoff frequency came to about 0.994. There wasn't much noise in the roll measurements to begin with, so there was little change for that axis as anticipated. There was some noticeable small change in noise in the pitch readings. 
 
-![filtered pitch plus 90](/docs/lab2/filtered_pitch_plus_90.png)
-![filtered pitch minus 90](/docs/lab2/filtered_pitch_minus_90.png)
-![filtered pitch fft](/docs/lab2/filtered_pitch_fft.png)
+![filtered pitch plus 90](/lab2/filtered_pitch_plus_90.png)
+![filtered pitch minus 90](/lab2/filtered_pitch_minus_90.png)
+![filtered pitch fft](/lab2/filtered_pitch_fft.png)
 
-![filtered roll plus 90](/docs/lab2/filtered_roll_plus_90.png)
-![filtered roll minus 90](/docs/lab2/filtered_roll_minus_90.png)
-![filtered roll fft](/docs/lab2/filtered_roll_fft.png)
+![filtered roll plus 90](/lab2/filtered_roll_plus_90.png)
+![filtered roll minus 90](/lab2/filtered_roll_minus_90.png)
+![filtered roll fft](/lab2/filtered_roll_fft.png)
 
 # Gyroscope 
 
-For the gyroscope data, I used the differential equation from class implemented below:
+For the gyroscope data, I implemented the following differential equation:
 
-![gyroscope code](/docs/lab2/gyroscope_code.png)
+![gyroscope equation](/lab2/gyro_equation)
+
+Here's the corresponding code: 
+
+![gyroscope code](/lab2/gyro_code.png)
 
 
 
@@ -78,7 +80,6 @@ Below I demonstrate 5 seconds of IMU data collected at once:
 
 # Record a Stunt
 
-I tried out the RC car to finish out the lab. It was suprrisingly easy to flip the robot over itself with forward momentum. I tried to do a wheelie, but I didn't have the delicate touch for it. I was able to get it to roll onto its side and get back up, though. 
+I tried out the RC car to finish out the lab. It was suprrisingly easy to flip the robot over itself with forward momentum. I was able to get a spinning wheelie at some point once but I was unfortunately not able to reproduce it on camera. 
 
-<!-- put stunt video here -->
-
+[![Car stunt](https://img.youtube.com/vi/-nr-Zjzp4ws/0.jpg)](https://www.youtube.com/watch?v=-nr-Zjzp4ws)
