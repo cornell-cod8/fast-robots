@@ -29,8 +29,7 @@ And here is a short clip of my output with pitch of -90 degrees and roll of +90 
 
 [![Pitch and roll test](https://img.youtube.com/vi/jJOOMa5cFIo/0.jpg)](https://www.youtube.com/watch?v=jJOOMa5cFIo)
 
-To evalute the accuracy of the IMU accelerometer, I measured the output of the pitch and roll functions where outputs of -90, 0, and 90 
-degrees were expected, with results displayed in the graphs below. Based on this data, the accelerometer seems to calculate the pitch and roll at these extreme values pretty accurately. I had very small mean error of less than 1 degree, so there was little need for offset adjustments. There was notably much smaller amounts of noise for roll than pitch shown on the Fast Fourier transform plots. 
+To evalute the accuracy of the IMU accelerometer, I measured the output of the pitch and roll functions where outputs of -90, 0, and 90 degrees were expected, with results displayed in the graphs below. Based on this data, the accelerometer seems to calculate the pitch and roll at these extreme values pretty accurately. I had very small mean error of less than 1 degree, so there was little need for offset adjustments. There was notably much smaller amounts of noise for roll than pitch shown on the Fast Fourier transform plots. 
 
 ![pitch plus 90](./lab2/pitch_plus_90.png)
 ![pitch minus 90](./lab2/pitch_minus_90.png)
@@ -40,11 +39,17 @@ degrees were expected, with results displayed in the graphs below. Based on this
 ![roll minus 90](./lab2/roll_minus_90.png)
 ![roll fft](./lab2/roll_fft.png)
 
-Based on this data, it seems like a good choice for cutoff frequency might be around 5 Hz because there doesn't seem to be useful data beyond this point for either axis. Implementing a simple low-pass filter using this cutoff frequency, I had a sampling frequency of about 350, so my alpha-value for my chosen cutoff frequency came to about 0.994. There wasn't much noise in the roll measurements to begin with, so there was little change for that axis as anticipated. There was some noticeable small change in noise in the pitch readings. 
+Based on this data, it seems like a good choice for cutoff frequency might be around 5 Hz because there doesn't seem to be useful data beyond this point for either axis. Implementing a simple low-pass filter using this cutoff frequency, I had a sampling frequency of about 350, so my alpha-value for my chosen cutoff frequency came to about 0.994.
+
+![filtered acc](./lab2/acc_filter_code.png)
+
+There was some small, but noticeable reduction in noise in the pitch readings. 
 
 ![filtered pitch plus 90](./lab2/filtered_pitch_plus_90.png)
 ![filtered pitch minus 90](./lab2/filtered_pitch_minus_90.png)
 ![filtered pitch fft](./lab2/filtered_pitch_fft.png)
+
+There wasn't much noise in the roll measurements to begin with, so there was little change for that axis as anticipated. 
 
 ![filtered roll plus 90](./lab2/filtered_roll_plus_90.png)
 ![filtered roll minus 90](./lab2/filtered_roll_minus_90.png)
@@ -66,8 +71,15 @@ Delaying the sample frequency by ~100ms seemed to lower variance further to an e
 
 ![gyroscope rest with +100ms delay](./lab2/gyro_rest_delay.png)
 
-To counteract the drift, I implemented a complementary filter as we learned in class. 
+To counteract the drift, I implemented a complementary filter to combine the gyroscope and filtered accelerometer data. I retained the same low-pass parameter of 0.935, and eventually settled on a parameter of 0.4 for the complementary filter based on performance during long critical points in resting performance. Compared to the previous methods, this seemed to combine the solid baseline of the accelerometer accuracy with the gyroscope precision while minimizing drift.
 
+![complementary filter](./lab2/complement_waves.png)
+
+![commplementary filter](./lab2/complement_rest.png)
+
+![commplementary filter](./lab2/complement_pitch_plus.png)
+
+![commplementary filter](./lab2/complement_roll_plus.png)
 
 
 
@@ -77,13 +89,11 @@ For my data collection in this lab, I used the second approach from last lab to 
 
 A major contributor is likely due to the fact that this was while I was only measuring one dimension at a time for the accelerometer. I maintained 2 global 1000-element array for time and sensor data, and the Artemis had more than enough space with 384kB to store 8,000 bytes, plus three more global floats used for updating variables, for a total of 8,012 bytes. 
 
-For the gyroscope, I recorded everything at once, but maintained three separate arrays for minor convenience. I think it would make more sense to store everything in one big array because keeping the entire array stored in one location avoids minor slow-downs from multiple searches for arrays that may be stored in multiple locations. 
+For the gyroscope, I recorded everything at once, but maintained separate arrays for no particular reason. I think it would make more sense to store everything in one big array because keeping the entire array stored in one location avoids minor slow-downs from multiple searches for arrays that may be stored in multiple locations. Additionally, as these attributes would generally be accessed all at once for general locomotive purposes, it would be convenient for the data to be in the sam place. 
 
 For the data type, floats made the most sense as accuracy of data is important in state estimation, and small error can propagate to large miscalculations depending on control setting. 
 
-Below I demonstrate 5 seconds of IMU data collected at once:
-
-<!-- put 5 sec video here -->
+The accelerometer data, as well as most of the gyroscope data, was collected with a large sample size of 1000. Particularly, the gyroscope data before applying the complementary filter clearly demonstrates capturing for at least 5 seconds without the sampling rate delay, and for at least 10 seconds with the delay. 
 
 # Record a Stunt
 
