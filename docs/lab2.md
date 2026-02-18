@@ -54,17 +54,17 @@ Based on this data, it seems like a good choice for cutoff frequency might be ar
 
 For the gyroscope data, I implemented the differential equation shown below in the subsequent code snippet: 
 
-![gyroscope equation](/lab2/gyro_equation) 
+![gyroscope equation](./lab2/gyro_equation) 
 
-![gyroscope code](/lab2/gyro_code.png)
+![gyroscope code](./lab2/gyro_code.png)
 
 I first compared the resting measurements with no IMU movement. The gyroscope data had significantly less measurement noise, but since the roll and pitch were continuously incremented by their previous values while no movement occurred, they had substantial drift. 
 
-![gyroscope rest](/lab2/gyro_rest.png)
+![gyroscope rest](./lab2/gyro_rest.png)
 
 Delaying the sample frequency by ~100ms seemed to lower variance further to an extent, as this data was generally more linear. 
 
-![gyroscope rest with +100ms delay](/lab2/gyro_rest_delay.png)
+![gyroscope rest with +100ms delay](./lab2/gyro_rest_delay.png)
 
 To counteract the drift, I implemented a complementary filter as we learned in class. 
 
