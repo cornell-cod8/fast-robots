@@ -66,19 +66,21 @@ I made some adjustments to the Example1_ReadDistance code to display both sensor
 
 ### Measurement optimization
 
-Following the lab handout recommendation, I added a new command to ble_arduino.ino. This function repeatedly checks the current program time elapsed, queries whether new ToF sensor data is available from both sensors, and prints said data if it is available. 
+Following the lab handout recommendation, I added a new command to ble_arduino.ino. This function repeatedly prints the current program time elapsed, queries whether new ToF sensor data is available from both sensors, and prints said data if it is available. 
 
-<!-- insert some code here -->
+![optimized loop code](./lab3/optimization.png)
 
-A test run of 500 data points showed an average loop execution rate of about _ ms per iteration. The current limiting factor is the actual speed that the ToF sensors themselves can acquire data. 
+A test run of 250 iterations showed an average loop execution rate of around 3.24 ms per iteration. Of these, the first sensor had 3 measurements, and the other sensor had 4 measurements.  The current limiting factor is clearly the speed that the ToF sensors themselves acquire data. 
 
 ### Three sensors
 
 Finally, I connect the IMU to the third slot on the breakout board. The IMU's I2C address is 0x69, which is different from the other two addresses, so no other changes need to be made. 
 
-<!-- insert 3 sensor picture here -->
+![all three sensors connected](./lab3/three_sensors.png)
 
 Like before, I demonstrate all three sensors making measurements. I added another command which records the distance readings from the ToF sensors and the angle data from the IMU using code from Lab 2. This data is stored in separate arrays which are sent to my computer via Bluetooth. 
+
+For the following plots, I angled my hand up and down in terms of pitch while keeping the orientation of the equipment in my hand the same. The expectation was for the first ToF sensor pointing straight ahead and the pitch measurement from the IMU to oscillate with my movement and surroundings while the other measurements stayed roughly the same. 
 
 <!-- Time v Distance: Include graph of data sent over bluetooth (2 sensors) -->
 
