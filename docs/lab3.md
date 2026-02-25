@@ -16,7 +16,7 @@ In the diagram below, red connections from the QWIIK board to the sensors corres
 
 ### One sensor
 
-After clipping the ends of two QWIIC cables and soldering one to each ToF sensor, I tested them with the RedBoard Artemis Nano. I connected the first sensor, QWIIC breakout board, and Artemis board as shown below: 
+After clipping the ends of two QWIIC cables and soldering one to each ToF sensor, I tested them with the RedBoard Artemis Nano. I connected the first ToF sensor, QWIIC breakout board, and Artemis board as shown below: 
 
 ![one tof sensor](./lab3/one_tof_sensor.png)
 
@@ -46,12 +46,7 @@ For repeatability, we consider the standard deviation from the sample at each di
 
 Finally, ranging time held consistently around 95 ms. This is likely due to the inefficient while-loop wait for sensor data, which is better optimized later.
 
-![ranging time plot](./lab3/ranging_time_plot.png)
-
-<!-- accuracy: mean measurements ranging from 10cm to 130cm in increments of 10 -->
-<!-- sensor range: do the above past 130cm, say, to 180cm -->
-<!-- repeatability: check standard deviation of distance measurements -->
-<!-- ranging time: measure how long it actually takes to make a measurement -->
+![ranging time plot](./lab3/ranging_time_plot.png)\
 
 ### Two sensors
 
@@ -80,7 +75,7 @@ Finally, I connect the IMU to the third slot on the breakout board. The IMU's I2
 
 Like before, I demonstrate all three sensors making measurements. I added another command which records the distance readings from the ToF sensors and the angle data from the IMU using code from Lab 2. This data is stored in separate arrays which are sent to my computer via Bluetooth. 
 
-For the following plots, I adjusted my environment and angled my hand up and down trying to get the distance measurements from both ToF sensors and the measured pitch and roll from the IMU to all oscillate at once. Note that a typo from carrying code from previous labs leads to the unrealistic spike at the start of the IMU data. 
+For the following plots, I recorded 50 datapoints during which the IMU and both ToF sensors had all recorded data. I adjusted my environment and angled my hand up and down trying to get the distance measurements from both ToF sensors and the measured pitch and roll from the IMU to all oscillate at once. Note that a typo from carrying code from previous labs leads to the unrealistic spike at the start of the IMU data. 
 
 ![IMU data](./lab3/three_sensors_imu.png)
 
