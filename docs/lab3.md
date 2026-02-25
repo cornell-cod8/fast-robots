@@ -80,8 +80,8 @@ Finally, I connect the IMU to the third slot on the breakout board. The IMU's I2
 
 Like before, I demonstrate all three sensors making measurements. I added another command which records the distance readings from the ToF sensors and the angle data from the IMU using code from Lab 2. This data is stored in separate arrays which are sent to my computer via Bluetooth. 
 
-For the following plots, I angled my hand up and down in terms of pitch while keeping the orientation of the equipment in my hand the same. The expectation was for the first ToF sensor pointing straight ahead and the pitch measurement from the IMU to oscillate with my movement and surroundings while the other measurements stayed roughly the same. 
+For the following plots, I adjusted my environment and angled my hand up and down trying to get the distance measurements from both ToF sensors and the measured pitch and roll from the IMU to all oscillate at once. Note that a typo from carrying code from previous labs leads to the unrealistic spike at the start of the IMU data. 
 
-<!-- Time v Distance: Include graph of data sent over bluetooth (2 sensors) -->
+![IMU data](./lab3/three_sensors_imu.png)
 
-<!-- Time v Angle: Include graph of data sent over bluetooth -->
+![ToF data](./lab3/three_sensors_tof.png)
