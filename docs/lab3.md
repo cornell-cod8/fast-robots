@@ -55,20 +55,20 @@ Finally, ranging time held consistently around 95 ms. This is likely due to the 
 
 ### Two sensors
 
-I now have both ToF sensors connected to the breakout board. Both sensors default to the same address, so I had to change the address of one of the boards. I connected a wire from the XSHUT port on one board to a pin on the Artemis (arbitrarily picking A0). Now,  I can set XSHUT low during setup, change the address of the board, and then set it high again to wakeup the sensor with a new address. 
+I now have both ToF sensors connected to the breakout board. Both sensors default to the same address, so I had to change the address of one of the boards. I connected a wire from the XSHUT port on one board to a pin on the Artemis (arbitrarily picking A0). Now,  I can set XSHUT low during setup, change the address of the first ToF sensor, and then set it high again to wake it back up with the new address. 
 
-<!-- insert corresponding code snippet here -->
-<!-- take picture of 2 sensor setup -->
+![coding two sensors](./lab3/two_sensor_code.png)
+![two sensors connected](./lab3/two_sensor_setup.png)
 
-I made some adjustments to the Example1_ReadDistance code to display both sensor outputs. In the video, I show both sensors actively making independent readings. As I adjust the position of each one individually, the appropriate sensor output changes accordingly. 
+I made some adjustments to the Example1_ReadDistance code to display both sensor outputs. In the video, I show both sensors actively making independent readings by rotating them individually towards the ceiling. 
 
-<!-- insert 2 sensor video here -->
+[![Measuring data with two sensors](https://img.youtube.com/vi/aAY3PU_phd8/0.jpg)](https://www.youtube.com/watch?v=aAY3PU_phd8)
 
 ### Measurement optimization
 
 Following the lab handout recommendation, I added a new command to ble_arduino.ino. This function repeatedly checks the current program time elapsed, queries whether new ToF sensor data is available from both sensors, and prints said data if it is available. 
 
-
+<!-- insert some code here -->
 
 A test run of 500 data points showed an average loop execution rate of about _ ms per iteration. The current limiting factor is the actual speed that the ToF sensors themselves can acquire data. 
 
