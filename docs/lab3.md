@@ -26,9 +26,14 @@ Running the Example05_wire_I2C file from the Apollo3 library, I scanned the brea
 
 <!-- Discussion and pictures of sensor data with chosen mode -->
 
-I chose to use the short-distance mode. The datasheet showed a consistent maximum distance of ~130cm for the short-distance mode, which seems sufficient for tasks such as navigating a maze. While the long-distance mode did reach up to 360cm in ideal conditions, its significant sensitivity to ambient light and target reflectance suggests the short-distance mode is more appropriate. 
+I chose to use the short-distance mode. The datasheet showed a consistent maximum distance of ~130cm for the short-distance mode, which seems sufficient for tasks such as navigating a maze. While the long-distance mode did reach up to 360cm in ideal conditions, its significant sensitivity to ambient light and target reflectance suggest little tolerance for more realistic conditions, so the short-distance mode seems more appropriate. 
 
+Leaving the sensor in short-distance mode, I used the Example1_ReadDistance file from the ToF sensor Arduino library. In a well-lit room, I pointed the sensor at a flat wall and move backwards over time. The results are shown in the figure below: 
 
+<!-- accuracy: mean measurements ranging from 10cm to 130cm in increments of 10 -->
+<!-- sensor range: do the above past 130cm, say, to 180cm -->
+<!-- repeatability: check standard deviation of distance measurements -->
+<!-- ranging time: measure how long it actually takes to make a measurement -->
 
 <!-- 2 ToF sensors and the IMU: Discussion and screenshot/video of sensors working in parallel -->
 
@@ -40,15 +45,24 @@ I made some adjustments to the Example1_ReadDistance code to display both sensor
 
 <!-- insert 2 sensor video here -->
 
+### Measurement optimization
+
+Following the lab handout recommendation, I added a new command to ble_arduino.ino. This function repeatedly checks the current program time elapsed, queries whether new ToF sensor data is available from both sensors, and prints said data if it is available. 
+
+![ToF measurement loop code](./lab3/measurement_loop.png)
+
+A test run of 500 data points showed an average loop execution rate of about _ ms per iteration. The current limiting factor is the actual speed that the ToF sensors themselves can acquire data. 
+
 ### Three sensors
 
 Finally, I connect the IMU to the third slot on the breakout board. The IMU's I2C address is 0x69, which is different from the other two addresses, so no other changes need to be made. 
 
 <!-- insert 3 sensor picture here -->
 
-Like before, I demonstrate all three sensors making measurements, using the 
+Like before, I demonstrate all three sensors making measurements. I added another command which records the distance readings from the ToF sensors and the angle data from the IMU using code from Lab 2. This data is stored in separate arrays which are sent to my computer via Bluetooth. 
 
-<!-- Tof sensor speed: Discussion on speed and limiting factor; include code snippet of how you do this -->
+<!-- insert graph of time vs distance -->
+<!-- insert graph of time vs angle -->
 
 <!-- Time v Distance: Include graph of data sent over bluetooth (2 sensors) -->
 
