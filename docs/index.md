@@ -12,4 +12,4 @@ It's been a long time since I've done any web design, so I'm not too proud of th
 
 [Lab 2](lab2.md)
 
-[Lab 3](Lab3.md)
+[Lab 3](lab3.md)
