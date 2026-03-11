@@ -48,4 +48,4 @@ Here, I set the car atop a tape measure behind the 6-foot mark. The car moves fo
 
 Finally, for an open-loop test, I had the car do figure-eights around the legs of my dining-room chair in the video below. 
 
-<!-- TODO : put figure eight video -->
+[![Open loop test](https://img.youtube.com/vi/wW7597Fuax0/0.jpg)](https://www.youtube.com/watch?v=wW7597Fuax0)
