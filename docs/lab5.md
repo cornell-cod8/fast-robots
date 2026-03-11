@@ -16,7 +16,7 @@ For my PID controller, I chose to focus on proportion and derivative. It made se
 
 My initial results seemed most fruitful when I set K_P = 0.05 and K_D = 7. To assess effectiveness, I looked at how long it took the robot to reach a small "oscillation" phase, and how long afterwards it took to come to a complete stop. (Below is a sample test at a distance of 2 m.)
 
-<!-- TODO : insert 2m video here -->
+[![2 meter PD test](https://img.youtube.com/vi/wW7597Fuax0/0.jpg)](https://www.youtube.com/watch?v=wW7597Fuax0)
 
 I primarily tested this at distances of 2, 3, and 4 meters, switching to the long-distance mode on the front ToF sensor to support this. While top speeds were generally the same, I did notice less oscillation at farther distances on average.
 
