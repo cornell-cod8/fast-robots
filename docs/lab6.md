@@ -1,6 +1,6 @@
 # Lab 6
 
-The purpose of this lab is... uh... IDK I'll fill this in later.
+The purpose of this lab is to explore PID control again with sensor data to control the robot's orientation. 
 
 ## Setup
 
