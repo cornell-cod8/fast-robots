@@ -44,7 +44,13 @@ I started out using only a positional argument. For simple testing, I set up som
 
 Using only the P component seemed to be very effective, so I left things at that for now, but the implementation for I and D were left in the code for possible later development. 
 
-Applying the same logic, I wrote a loop that repeatedly checks the car's orientation in live time and amkes the necessary adjustments. Here is my finished product:
+Applying the same logic, I wrote a loop that repeatedly checks the car's orientation in live time and amkes the necessary adjustments. 
 
-<!-- TODO: car video -->
+<!-- TODO: insert simple pseudocode for loop -->
+
+In the future, I would like to make this more easily integrable with other code by rewriting this using a handler in the main Arduino loop that's only called whenever the yaw value is changed. 
+
+Here I demonstrate my finished product:
+
+<!-- TODO: car kicking video -->
 
