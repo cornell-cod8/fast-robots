@@ -44,9 +44,11 @@ I started out using only a positional argument. For simple testing, I set up som
 
 Using only the P component seemed to be very effective, so I left things at that for now, but the implementation for I and D were left in the code for possible later development. 
 
-Applying the same logic, I wrote a loop that repeatedly checks the car's orientation in live time and amkes the necessary adjustments. 
+Applying the same logic, I wrote a loop that repeatedly checks the car's orientation in live time and makes the necessary adjustments. This new command performs the following tasks:
 
-<!-- TODO: insert simple pseudocode for loop -->
+- The starting position/yaw is initialized outside of the while-loop.
+- At the start of every iteration, it gets a new yaw reading from the DMp if available, or reuses the previous value otherwise. 
+- If the new value is far from the starting position, appropriate PWM values are sent to the motors until the car corrects its orientation, at which point it brakes. 
 
 In the future, I would like to make this more easily integrable with other code by rewriting this using a handler in the main Arduino loop that's only called whenever the yaw value is changed. 
 
