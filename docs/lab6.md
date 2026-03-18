@@ -50,9 +50,13 @@ Applying the same logic, I wrote a loop that repeatedly checks the car's orienta
 - At the start of every iteration, it gets a new yaw reading from the DMp if available, or reuses the previous value otherwise. 
 - If the new value is far from the starting position, appropriate PWM values are sent to the motors until the car corrects its orientation, at which point it brakes. 
 
+I also made some small adjustments. I added a high-pass filter to the derivative to ignore small derivative values. Even though my derivative term went unused here, it was still used for data interpolation, so this was to make sure small derivative values would not result in "jittering" when interpolating new yaw values. 
+
+![interpolate adjustment](./docs/lab6/interpolation.png)
+
 In the future, I would like to make this more easily integrable with other code by rewriting this using a handler in the main Arduino loop that's only called whenever the yaw value is changed. 
 
 Here I demonstrate my finished product:
 
-<!-- TODO: car kicking video -->
-
+<!-- URL: https://youtu.be/4iuTBBAO7sQ -->
+[![2 meter PD test](https://img.youtube.com/vi/4iuTBBAO7sQ/0.jpg)](https://www.youtube.com/watch?v=4iuTBBAO7sQ)
