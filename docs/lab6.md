@@ -16,21 +16,19 @@ I also made some adjustments to my sensor data collection; namely, to reduce yaw
 
 Particularly, I borrowed the following setup code: 
 
-<!-- TODO: add setup code -->
+![else branch](./docs/lab6/dmpsetup.png)
 
 As well as this code for the data access and processing loop, omitting extraneous calculations: 
 
-<!-- TODO: add data collection loop code -->
+![else branch](./docs/lab6/dmploop.png)
 
 I also decided to use an extrapolative sampling method by reusing the previous yaw value when a new DMP datapoint was not available: 
 
-<!-- TODO: add the else branch -->
+![else branch](./docs/lab6/dmpelse.png)
 
 Judging against my sensor data from Lab 2, I looked at yaw measurements under various movement patterns. using the DMP seemed to stabilize the sensor data considerably. There admittedly wasn't much variance before, but there seems to be even less deviation now. 
 
-<!-- TODO: yaw while stationary on the ground -->
-
-<!-- TODO: yaw while oscillating left/right -->
+![else branch](./docs/lab6/dmpstat.png)
 
 ## Orientation Control
 
@@ -40,9 +38,9 @@ As described earlier, I used an extrapolation approach from Lab 5 and approximat
 
 I started out using only a positional argument. For simple testing, I set up something similar to the previous lab. I put in a target value of a 90 degree rotation and started with a K_P value of 3 and a max speed of 200, which overshot its target pretty hard. I ended up reducing the K_P value to 2 and the speed to 180, which ended up being very effective. As shown below, the robot took a moment to get started with its rotation, but after it started moving it reached its destination very quickly. The PWM input to the motors followed expected behavior. My minimum speed based on lab 4 was 120 PWM, and after the car reached its target angle, no further inputs were calculated, which is why the speed graph never reaches 0 despite a successful test. 
 
-<!-- TODO: position (theta) over time during simple test -->
+![else branch](./docs/lab6/pidtest.png)
 
-<!-- TODO: speed input to motors over time during simple test -->
+![else branch](./docs/lab6/pidtestspd.png)
 
 Using only the P component seemed to be very effective, so I left things at that for now, but the implementation for I and D were left in the code for possible later development. 
 
