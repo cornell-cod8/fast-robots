@@ -10,29 +10,26 @@ Aside from rewriting some old functions to use less data and save space, I have 
 
 ## Estimating drag and momentum
 
-The first step was to estimate drag and momentum terms for the A and B matrices. I wrote a program that measures motor PWM inputs and ToF distance measurements over time. During data collection, the car is set to run at a wall at a constant motor input. I used a 200 PWM input to be consistent with Lab 5 conditions. To avoid damaging the car, I put up a foam sheet and added active breaking in the code when the car gets within ~1 meter of the wall.
+The first step was to estimate drag and momentum terms for the A and B matrices. I wrote a program that measures motor PWM inputs and ToF distance measurements over time. During data collection, the car is set to run at a wall at a constant motor input. I used a 200 PWM input to be consistent with Lab 5 conditions. To avoid damaging the car, I put up a foam sheet and added active breaking in the code when the car gets within ~1 meter of the wall. Below is a brief video demonstration:
 
-<!-- TODO: insert code snippet here -->
-<!-- I will probably just put pseudocode here instead of the actual loop -->
+<!-- URL: https://youtu.be/V1TT1EpXGjo -->
+[![car running into wall](https://img.youtube.com/vi/V1TT1EpXGjo/0.jpg)](https://www.youtube.com/watch?v=V1TT1EpXGjo)
 
-Below are the results of my procedure and a brief video demonstration:
+As shown in the video, the active braking and foam were very effective in minimizing damage to my car. Below is my collected motor PWM input and measured TOF distance data: 
 
-<!-- TODO: insert car ramming video -->
 <!-- TODO: insert PWM input vs time -->
+![PWM values](./docs/lab7/T1_input_speed_vs_time.png)
 <!-- TODO: insert distance vs. time -->
+![distance values](./docs/lab7/T1_distance_vs_time.png)
 
-I then converted distance measurements to velocity values in Python by taking differences between adjacent data points at each measurement time.
+I then converted distance measurements to velocity values in Python by taking differences between adjacent data points at each measurement time. Below is the aforementioned Python code and the resulting graph, annotated to highlight target values:
 
 <!-- TODO: insert Jupyter code of converting distance data to velocity data -->
+![velocity code](./docs/lab7/T1_velocity_code.png)
 <!-- TODO: insert calculated car velocity vs. time -->
+![velocity values](./docs/lab7/T1_velocity_vs_time.png)
 
-<!-- TOOD: insert data analysis -->
+Based on this data, my steady-state velocity seems to be approximately 2.610 meters per second. At 90% rise time around ~1.05 seconds, the speed was around 2.349 meters per second. It follows that the drag and momentum terms are found as follows:
 
-Testing LaTeX in Markdown...?
-
-```math
-\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
-```
-
-**The Cauchy-Schwarz Inequality**\
-$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+<!-- TODO: insert calculation of d and m -->
+![calculations](./docs/lab7/T1_dm_calcs.png)
