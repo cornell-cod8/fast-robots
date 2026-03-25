@@ -10,8 +10,33 @@ Aside from rewriting some old functions to use less data and save space, I have 
 
 ## Estimating drag and momentum
 
-The first step was to estimate drag and momentum terms for the A and B matrices. I wrote a program that measures motor PWM inputs and ToF distance measurements over time. During data collection, the car is set to run at a wall at a constant motor input. I used a 200 PWM input to be consistent with Lab 5 conditions. To avoid damaging the car, I put up a foam sheet and added active breaking in the code when the car gets within ~1 meter of the wall. Below is a brief video demonstration:
+Following the derivation from lecture, Newton's second law of motion states:
 
+![2nd law](./docs/lab7/T1_deriv_1.png)
+
+Additionally, the linear force acting on the car in terms of linear drag force d and motor input u:
+
+![linear force](./docs/lab7/T1_deriv_2.png)
+
+Using these, we can describe the dynamics of the robot car system as:
+
+![dynamics](./docs/lab7/T1_deriv_3.png)
+
+If we represent the system in state space notation in terms of position x and change in state x-dot: 
+
+![state space notation](./docs/lab7/T1_deriv_4.png)
+
+Then we can rewrite the dynamics statement in the form Ax + Bu:
+
+![state space conversion](./docs/lab7/T1_deriv_5.png)
+
+Again drawing from lecture, we can estimate the drag and mass using the following equations in terms of steady-state speed, steady-state input, and 90% rise time:
+
+![finding d and m](./docs/lab7/T1_deriv_6.png)
+
+To find those values, I wrote a program that measures motor PWM inputs and ToF distance measurements over time. During data collection, the car is set to run at a wall at a constant motor input. I used a 200 PWM input to be consistent with Lab 5 conditions. To avoid damaging the car, I put up a foam sheet and added active breaking in the code when the car gets within ~1 meter of the wall. Below is a brief video demonstration:
+
+<!-- TODO: insert video of car test for finding d and m -->
 <!-- URL: https://youtu.be/V1TT1EpXGjo -->
 [![car running into wall](https://img.youtube.com/vi/V1TT1EpXGjo/0.jpg)](https://www.youtube.com/watch?v=V1TT1EpXGjo)
 
