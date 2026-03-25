@@ -29,5 +29,7 @@ I then converted distance measurements to velocity values in Python by taking di
 <!-- TOOD: insert data analysis -->
 
 Testing LaTeX in Markdown...?
-$a+b=c$
-$\forall n\in \mathbb N, \; \sum_{x=0}^n i = \frac{n(n+1)}{2}$
+
+$`a+b=c`$
+
+$`\forall n\in \mathbb N, \; \sum_{x=0}^n i = \frac{n(n+1)}{2}`$
