@@ -81,10 +81,20 @@ Then I substitute these values appropriately into process noise and sensor noise
 
 To finish a Python version of my Kalman filter for testing, I use the Kalman filter update implementation shown in lecture: 
 
-![Kalman filter in Python](./lab7/T3_KF_python.png)
+![Kalman filter in Python](./lab7/T3_KF_code.png)
 
-Below are the Kalman filter results plotted against my experimental data. Although the shape seems appropriate in terms of smoothness and relative form compared to experimental data, the Kalman filter results were a considerable overestimate of the true distance from the wall. (Note that all the values in the graph are flipped to be consistent with our state representation, so this is an overestimate of the absolute value distance from the wall.) This was a consistent characteristic of my filter data when I went back and redid task 1 at various speeds (at a higher speed of 255 PWM and at a lower speed of 100 PWM) and distances (2000 mm, 3000 mm, 4000 mm) to debug.
+Below are the Kalman filter results plotted against my experimental data. Although the shape seems appropriate in terms of smoothness and relative form compared to experimental data, the Kalman filter results were a considerable overestimate of the true distance from the wall. (Note that all the values in the graph are flipped to be consistent with our state representation, so this is an overestimate of the absolute value distance from the wall.) 
 
 ![Kalman filter vs experimental data](./lab7/T3_KF_graph.png)
 
-To counteract this, I decreased the 
+This means that my covariance matrix estimates must be improved. I tried increasing the dx value, putting more faith in my sensor measurements as this would decrease \[sigma_3\], and this brought the graph closer and closer to the experimental data. Below I demonstrate with a value of 0.05:
+
+![Kalman filter higher dx](./lab7/T3_KF_graph_higher_dx.png)
+
+Similarly, when I decreased dx and and my faith in my sensor measurements, the filter values strayed further from the experimental data and relied more on the model. Below I demonstrate with a value of 0.005:
+
+![Kalman filter lower dx](./lab7/T3_KF_graph_lower_dx.png)
+
+## Implementation and testing of Kalman filter on Artemis
+
+I stuck with a dx value of 0.02 for this part. I wrote a new robot command to run the Kalman filter procedure onboard the Artemis. 
