@@ -30,6 +30,6 @@ I then converted distance measurements to velocity values in Python by taking di
 
 Testing LaTeX in Markdown...?
 
-$`a+b=c`$
-
-$`\forall n\in \mathbb N, \; \sum_{x=0}^n i = \frac{n(n+1)}{2}`$
+```math
+\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+```
