@@ -65,9 +65,7 @@ Given previously calculated values and simplifying, I find the following A and B
 
 ![calculations for A and B](./docs/lab7/T2_AB_calcs.png)
 
-Based on my experimental data from the previous section, I sampled 100 data points in 10.412 seconds, so my sampling rate is 0.104 second. The dimension of the state space is clearly 2, so I discretize these matrices in Python. Next, I initialize state vector x based on the first measured ToF value, which was 4098 mm in this case, and define observatio
-
-n matrix C by following the recommendation from the lab handout and using a matrix of [-1 0]^T measuring negative distance from the wall. All of these operations are compiled below:
+Based on my experimental data from the previous section, I sampled 100 data points in 10.412 seconds, so my sampling rate is 0.104 second. The dimension of the state space is clearly 2, so I discretize these matrices in Python. Next, I initialize state vector x based on the first measured ToF value, which was 4098 mm in this case, and define observation matrix C by following the recommendation from the lab handout and using a matrix of [-1 0]^T measuring negative distance from the wall. All of these operations are compiled below. (Note that my experimental observations are stored in an array called [D] instead of [tof].)
 
 ![discretization of A and B, among other things](./docs/lab7/T2_discrete_etc.png)
 
@@ -81,4 +79,10 @@ Then I substitute these values appropriately into process noise and sensor noise
 
 ## Implementation and testing of Kalman filter in Python
 
+To finish a Python version of my Kalman filter for testing, I use the Kalman filter update implementation shown in lecture: 
 
+![Kalman filter in Python](./docs/lab7/T3_KF_python.png)
+
+Based on my experimental data, although the shape seems appropriate, the Kalman filter results were a considerable overestimate of the true distance from the wall:
+
+![Kalman filter vs experimental data](./docs/lab7/T3_KF_graph.png)
