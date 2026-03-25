@@ -34,7 +34,7 @@ Again drawing from lecture, we can estimate the drag and mass using the followin
 
 ![finding d and m](./docs/lab7/T1_deriv_6.png)
 
-To find those values, I wrote a program that measures motor PWM inputs and ToF distance measurements over time. During data collection, the car is set to run at a wall at a constant motor input. I used a 200 PWM input to be consistent with Lab 5 conditions. To avoid damaging the car, I put up a foam sheet and added active breaking in the code when the car gets within ~1 meter of the wall. Below is a brief video demonstration:
+To find those values, I wrote a program that measures motor PWM inputs and ToF distance measurements over time. During data collection, the car starts at a distance of ~4000 mm and is set to run at a wall at a constant motor input. I used a 200 PWM input to be consistent with Lab 5 conditions. To avoid damaging the car, I put up a foam sheet and added active breaking in the code when the car gets within ~1 meter of the wall. Below is a brief video demonstration:
 
 <!-- TODO: insert video of car test for finding d and m -->
 <!-- URL: https://youtu.be/V1TT1EpXGjo -->
@@ -57,4 +57,28 @@ I then converted distance measurements to velocity values in Python by taking di
 Based on this data, my steady-state velocity seems to be approximately 2.610 meters per second. At 90% rise time around ~1.05 seconds, the speed was around 2.349 meters per second. It follows that the drag and momentum terms are found as follows:
 
 <!-- TODO: insert calculation of d and m -->
-![calculations](./docs/lab7/T1_dm_calcs.png)
+![calculations for d and m](./docs/lab7/T1_dm_calcs.png)
+
+## Initializing Kalman Filter
+
+Given previously calculated values and simplifying, I find the following A and B matrices: 
+
+![calculations for A and B](./docs/lab7/T2_AB_calcs.png)
+
+Based on my experimental data from the previous section, I sampled 100 data points in 10.412 seconds, so my sampling rate is 0.104 second. The dimension of the state space is clearly 2, so I discretize these matrices in Python. Next, I initialize state vector x based on the first measured ToF value, which was 4098 mm in this case, and define observatio
+
+n matrix C by following the recommendation from the lab handout and using a matrix of [-1 0]^T measuring negative distance from the wall. All of these operations are compiled below:
+
+![discretization of A and B, among other things](./docs/lab7/T2_discrete_etc.png)
+
+Finally, following from lecture, I select initial process noise and sensor noise covariance matrices using equations from lecture. (Here, I select dx = 20 mm = 0.02 m based on the sensor error data from the ToF sensor data sheet in long-range mode in worst-case lighting.) 
+
+![covariance stuff](./docs/lab7/T2_covariance.png)
+
+Then I substitute these values appropriately into process noise and sensor noise covariance matrices under assumption of uncorrelated noise:
+
+![covariance matrices](./docs/lab7/T2_covariance_matrices.png)
+
+## Implementation and testing of Kalman filter in Python
+
+
