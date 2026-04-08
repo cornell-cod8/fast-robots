@@ -73,9 +73,7 @@ For reasons science still can't explain, it managed enough force to break a leg 
 <!-- TODO: chair picture -->
 ![chair pic](./lab8/chair.jpg)
 
-I went into my room to stop the car, but it had already stopped itself... apparently the car's wheels caught stray hair from under the couch, which wound up in the wheels so tightly that all four wheels were locked together. (I chose to omit this picture.)
-
-Here's what (I think?) actually happened.
+Fortunately nothing else was broken, although there were a lot of things on the floor that were supposed to be on my desk. Here's what (I think?) actually happened.
 
 The bug in my code was that I was improperly using brakes. In my phase 1 code, I called a brake function after the timing threshold was cleared so that the robot would stop after clearing the 3-meter line, but it would only run after this condition was met, and was not called outside of the for-loop. I did not correct this issue until well after I already finished the lab, but it happened to be an issue for this specific attempt in combination with a wiring issue: the QWIIC port on my Artemis board has a rather weak and finnicky connection that tends to disconnect in response to very awkward physical stimuli. 
 
