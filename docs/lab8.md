@@ -34,12 +34,12 @@ Attempt 1:
 
 Attempt 2:
 
-<!-- TODO: attempt 1 video -->
-<!-- TODO: attempt 1 motor value graphs -->
-<!-- TODO: attempt 1 sensor data graphs -->
+<!-- TODO: attempt 2 video -->
+<!-- TODO: attempt 2 motor value graphs -->
+<!-- TODO: attempt 2 sensor data graphs -->
 
 Attempt 3: 
 
-<!-- TODO: attempt 1 video -->
-<!-- TODO: attempt 1 motor value graphs -->
-<!-- TODO: attempt 1 sensor data graphs -->
+<!-- TODO: attempt 3 video -->
+<!-- TODO: attempt 3 motor value graphs -->
+<!-- TODO: attempt 3 sensor data graphs -->
