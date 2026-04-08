@@ -21,3 +21,5 @@ It's been a long time since I've done any web design, so I'm not too proud of th
 [Lab 6](lab6.md)
 
 [Lab 7](lab7.md)
+
+[Lab 8](lab8.md)
