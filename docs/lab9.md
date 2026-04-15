@@ -6,7 +6,7 @@ The objective of this lab is to begin implementing motion planning concepts by u
 
 At a high level, I will use an orientation control approach. The robot will make a full rotation in place in increments of roughly 20 degrees and take distance measurements using the front-facing ToF sensor at each increment. 
 
-To check for sensor and robot position frames, I took some additional measurements using a tape measure and a flat-edge with measurements accurate to the nearest 1/16 inch. These were used to find the front-facing ToF sensor frame, visualized in the diagram below:
+To check for sensor and robot position frames, I took some additional measurements using a tape measure and a straightedge with measurements accurate to the nearest 1/16 inch. These were used to find the front-facing ToF sensor frame, visualized in the diagram below:
 
 ![robot sensor position](./lab9/robot_sensor_position.png)
 
@@ -16,12 +16,13 @@ Here I take the robot's center as the origin (0,0), with the x-axis running alon
 
 After confirming that my Lab 6 code still works for PID orientation control, I built on top of that for this lab. Using multiple iterations for the PID control, the robot would visit multiple angles at increments of 15 degrees. At each point, the robot took a distance measurement with the front-facing ToF sensor and a gyroscope measurement with the IMU's digital motion processor (DMP). The sensor was left in long-distance mode to better fit the conditions of the lab environment setup. This data was sent to my laptop in polar coordinates, and I added the aforementioned 2.75-inch offset to the distance measurements to generate a graph. 
 
-For example, consider the following setup in my room. Labeled in the diagram is an origin point (O) and three vantage points (A, B, and C) from which to take distance measurements. 
+I used the following experimental setup. Labeled in the diagram is an origin point (O) and three vantage points (A, B, and C) from which to take distance measurements. 
 
 <!-- TODO: picture of experimental environment setup -->
 
 <!-- TODO: digital diagram in ms paint or something -->
 
+I tried to keep the starting orientation consistent at each point using the gyroscope. Using a single setpoint zeroed using a flat wall, I did an initial pass to each location, manually rotated the robot to the setpoint, and then outlined the robot with masking tape. Later, when I took my measurements, I used the tape and a straightedge to reproduce those positions as accurately as possible. 
 
 Here is a video of the data collection process at point A:
 <!-- TODO: data collection video -->
@@ -33,7 +34,11 @@ This resulted in the following data:
 
 ## Error Analysis
 
-My primary sources of error came from the ToF sensor and the rotation of the robot itself. Per the VL53L1X datasheet from Lab 3, the sensor error is estimated at around 20 millimeters in this environment's lighting. A possible source of rotational error came from the margin of error permitted for the rotations, which was within 1 degree. I tried to minimize this error by remeasuring the angle from the DMP output instead of using the intended angle; for instance, if a rotation intended to terminate at 100 degrees from the setpoint instead terminated at 99.5 degrees, I would record the angle for that data point as 99.5 degrees instead of 100 degrees.
+My primary sources of error came from the ToF sensor, the constraints of the environment, and the rotation of the robot itself. Per the VL53L1X datasheet from Lab 3, the sensor error is estimated at around 20 millimeters in this environment's lighting. In my environment, my measurements for the positions of the three observation points and the origin were limited by the width of the tape I used to mark their locations. This width was 0.75 inch, so the measurements from these locations may have been confounded by an additional 0.375 inch in any direction. 
+
+For rotation, a possible source of rotational error came from the margin of error permitted for the rotations, which was within 1 degree. I tried to minimize this error by remeasuring the angle from the DMP output instead of using the intended angle; for instance, if a rotation intended to terminate at 100 degrees from the setpoint instead terminated at 99.5 degrees, I would record the angle for that data point as 99.5 degrees instead of 100 degrees.
+
+Another source comes from my attempt at orientation consistency. This was hard to quantify, since I would be measuring the angle of the tape itself. 
 
 Additionally, the central axis of the robot adjusted with each measurement as the wheels were not rotating at exactly the same speed. To find this error, I pointed the robot reasonably perpendicular to a wall and took distance measurements before and after a full 360 degree rotation. After 5 trials, I found the average difference was an increase of _ millimeters. The start and end of the movement were fairly smooth, so it seems reasonable to interpret this as a gradual change over the full rotation. Working with the same example as before, I tried applying an adjustment of x*_/18 to the xth measurement after the initial measurement at 0 degrees (so the offset increased linearly with a constant increase in x). This yielded the following adjusted diagram, which may fit the environment more comfortably: 
 
