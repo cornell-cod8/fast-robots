@@ -26,6 +26,8 @@ Also, it seems that the measured yaw from the DMP takes clockwise right-hand tur
 
 Here is a sample video of the data collection process at the origin:
 <!-- TODO: data collection video -->
+<!-- video link: https://youtu.be/4ujupi-r3Fo-->
+[![data collection](https://img.youtube.com/vi/4ujupi-r3Fo/0.jpg)](https://www.youtube.com/watch?v=4ujupi-r3Fo)
 
 This resulted in the following data at each point. It looks like each separate set was able to get a rough idea of what the room shape truly looked like based on their shapes and the location of the origin respective to each plot. 
 
