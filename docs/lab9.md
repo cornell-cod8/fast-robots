@@ -14,66 +14,55 @@ Here I take the robot's center as the origin (0,0), with the x-axis running alon
 
 ## Procedure
 
-After confirming that my Lab 6 code still works for PID orientation control, I built on top of that for this lab. Using multiple iterations for the PID control, the robot would visit multiple angles at increments of 15 degrees. At each point, the robot took a distance measurement with the front-facing ToF sensor and a gyroscope measurement with the IMU's digital motion processor (DMP). The sensor was left in long-distance mode to better fit the conditions of the lab environment setup. This data was sent to my laptop in polar coordinates, and I added the aforementioned 2.75-inch offset to the distance measurements to generate a graph. 
+After confirming that my Lab 6 code still works for PID orientation control, I built on top of that for this lab. I lowered the maximum motor speed, since I was expecting to make small rotation movements, and left the other parameters as-is. Using many iterations, the robot would visit multiple angles at increments of 25 degrees. At each point, the robot took a distance measurement with the front-facing ToF sensor and a gyroscope measurement with the IMU's digital motion processor (DMP). The ToF sensor was left in long-distance mode to better fit the conditions of the environment setup. This data was sent to my laptop in polar coordinates, and I added the aforementioned 2.75-inch offset to the distance measurements to generate a graph. 
 
-I used the following experimental setup. Labeled in the diagram is an origin point (O) and three vantage points (A, B, and C) from which to take distance measurements. 
+I used the following experimental setup created using a tape measure, a straightedge, and my floor panels, which happened to be 5 inches in width. The setup uses a set of coordinate axes with positive-x pointing down and positive-y pointing to the right. The robot is shown at the origin point of O with coordinates (0,0). Three observation points of A, B, and C respectively take positions to the right at (0,25), below at (0, 29.5), and in the bottom-left at (-30,18.5). Note that the lines of tape align with the edges of the robot, which is why the points themselves lie where the robot's center would be instead of at the tape intersections. 
 
-<!-- TODO: picture of experimental environment setup -->
+![experimental setup](./lab9/experimental_setup.png)
 
-<!-- TODO: digital diagram in ms paint or something -->
+I tried to keep the starting orientation consistent at each point using the gyroscope. I applied a consistent setpoint for the robot's current orientation in the photo using a straightedge, and had the robot start its measurements at the same orientation at the observation points. For the PID control, I brought the maximum speed and minimum speed a bit lower to more consistently make the small 24-degree turns, and I settled on a PWM range of [95, 110] and a K_P value of 9. The tight PWM bound was to complmement a less frequent sampling time from waiting for a fresh PWM value instead of estimating based on previous values. 
 
-I tried to keep the starting orientation consistent at each point using the gyroscope. Using a single setpoint zeroed using a flat wall, I did an initial pass to each location, manually rotated the robot to the setpoint, and then outlined the robot with masking tape. Later, when I took my measurements, I used the tape and a straightedge to reproduce those positions as accurately as possible. 
+Also, it seems that the measured yaw from the DMP takes clockwise right-hand turns to be the positive rotation, so I flip all output values so that counterclockwise rotation is positive instead. This shouldn't make a difference in the final output, but it is more consistent with other models. 
 
-Here is a video of the data collection process at point A:
+Here is a sample video of the data collection process at the origin:
 <!-- TODO: data collection video -->
 
-This resulted in the following data:
-<!-- TODO: input motor speeds over time -->
-<!-- TODO: raw ToF scan of distance vs time -->
-<!-- TODO: polar plot of ToF scan  -->
+This resulted in the following data at each point. It looks like each separate set was able to get a rough idea of what the room shape truly looked like based on their shapes and the location of the origin respective to each plot. 
+
+Origin:
+![origin polar plot](./lab9/polar_origin.png)
+![origin rectangular plot](./lab9/rectangular_origin.png)
+Point A:
+![Point A polar plot](./lab9/polar_A.png)
+![Point A rectangular plot](./lab9/rectangular_A.png)
+Point B:
+![Point B polar plot](./lab9/polar_B.png)
+![Point B rectangular plot](./lab9/rectangular_B.png)
+Point C:
+![Point C polar plot](./lab9/polar_C.png)
+![Point C rectangular plot](./lab9/rectangular_C.png)
+
+When I collected the raw data, I re-initialized the gyroscope for points A, B, and C with a new setpoint. I averaged the starting points to estimate this setpoint to be 36.046 degrees from the original setpoint on the IMU gyroscope. The pictures above do not yet have this adjustment made, but based on the setup picture, these data seem reasonably consistent with the environment. 
+
+I tried combining these data into one map by applying the following transformation matrices for each point. The transformations that needed to be made were a rotation of 36.046 degrees and a translation to the origin frame from the frames of the respective observation points with aformentioned coordinates. The origin matrix is trivially the identity matrix and is omitted. 
+
+![transformation matrices](./lab9/transformation_matrices.png)
+
+Finally, applying the transformation matrices to the Cartesian-coordinate data, I collected them into one plot for my map. To estimate the actual map, I took an element-wise average of the data points and plotted them as a fifth series. The plot for Point B was notably an outlier trial, which may have been due to extra drift while collecting that particular dataset. 
+![map try one](./lab9/map_1.png)
 
 ## Error Analysis
 
 My primary sources of error came from the ToF sensor, the constraints of the environment, and the rotation of the robot itself. Per the VL53L1X datasheet from Lab 3, the sensor error is estimated at around 20 millimeters in this environment's lighting. In my environment, my measurements for the positions of the three observation points and the origin were limited by the width of the tape I used to mark their locations. This width was 0.75 inch, so the measurements from these locations may have been confounded by an additional 0.375 inch in any direction. 
 
-For rotation, a possible source of rotational error came from the margin of error permitted for the rotations, which was within 1 degree. I tried to minimize this error by remeasuring the angle from the DMP output instead of using the intended angle; for instance, if a rotation intended to terminate at 100 degrees from the setpoint instead terminated at 99.5 degrees, I would record the angle for that data point as 99.5 degrees instead of 100 degrees.
+For rotation, a possible source of rotational error came from the margin of error permitted for the rotations, which was within 1 degree. Even with slight processing time between angle measurement and stopping time, the measured angles seemed to stay pretty consistently within this bound; still, I tried to minimize this error by remeasuring the angle from the DMP output instead of using the intended angle; for instance, if a rotation intended to terminate at 100 degrees from the setpoint instead terminated at 99.5 degrees, I would record the angle for that data point as 99.5 degrees instead of 100 degrees.
 
-Another source comes from my attempt at orientation consistency. This was hard to quantify, since I would be measuring the angle of the tape itself. 
+Another source comes from my attempt at orientation consistency. This was hard to quantify, since I would be measuring the angle of the tape itself. It seems reasonable to assume my floorboards and straightedge are very close to rectangular, which would heavily limit variance in my setup, so I considered this factor to have negligible impact on accuracy; however, since I converted world measurements from feet back to millimeters in my data collection, there was rounding error to the nearest 0.1 millimeter.
 
-Additionally, the central axis of the robot adjusted with each measurement as the wheels were not rotating at exactly the same speed. To find this error, I pointed the robot reasonably perpendicular to a wall and took distance measurements before and after a full 360 degree rotation. After 5 trials, I found the average difference was an increase of _ millimeters. The start and end of the movement were fairly smooth, so it seems reasonable to interpret this as a gradual change over the full rotation. Working with the same example as before, I tried applying an adjustment of x*_/18 to the xth measurement after the initial measurement at 0 degrees (so the offset increased linearly with a constant increase in x). This yielded the following adjusted diagram, which may fit the environment more comfortably: 
-
-<!-- TODO: adjusted diagram -->
-
-I also tried making multiple rotations. Here I show overlapping data from three consecutive rotations at point A in three different colors, as well as an estimation of a "true" point by averaging the angle and distance data for the pair of points measured at each increment. The second diagram also adds the previously-mentioned gradual adjustment.
+Next, I wanted to consider multiple rotations to assess consistency. Using the origin as a test case, here I show overlapping data from two consecutive rotations at point A, as wells as an estimation of a "true" point by averaging the angle and distance data for the pair of points measured at each increment. I was unable to do more than two rotations as the connection would time out before data was sent back to my machine. 
 
 <!-- TODO: multiple rotations diagram -->
 
-## Results
+The central axis of the robot adjusted with each measurement as the wheels were not rotating at exactly the same speed. To find this error, I considered the difference in multiple-rotation measurements in the positive x- and y-directions. After 5 trials, I found the average difference was an increase of _ millimeters in the x-direction and _ millimeters in the y-direction. The start and end of the movement were fairly smooth, so it seems reasonable to interpret this as a gradual change over the full rotation. Working with the same example as before, I tried applying an adjustment of x*_/18 to the xth measurement after the initial measurement at 0 degrees (so the offset increased linearly with a constant increase in x). This yielded the following adjusted diagram, which seems to make very small deviations from the first attempt, so I ended up not adding this to my map.
 
-Below is all of my collected data, reproducing the data from Point A for convenience. I decided to adjust for the rotation error at all three locations. 
-
-Point A: 
-
-<!-- TODO: input motor speeds over time -->
-<!-- TODO: raw ToF scan of distance vs time -->
-<!-- TODO: polar plot of ToF scan  -->
-
-Point B: 
-
-<!-- TODO: input motor speeds over time -->
-<!-- TODO: raw ToF scan of distance vs time -->
-<!-- TODO: polar plot of ToF scan  -->
-
-Point C: 
-
-<!-- TODO: input motor speeds over time -->
-<!-- TODO: raw ToF scan of distance vs time -->
-<!-- TODO: polar plot of ToF scan  -->
-
-I start the robot at the same orientation in all three positions, so the transformation matrices were fairly straightforward two-dimensional translations. 
-
-<!-- TODO: show work for all three transformation matrices -->
-
-Applying these gave me the following completed map. I drew the lines manually to estimate the locations based on the collected sensor data. 
-
-<!-- TODO: show completed map -->
+<!-- TODO: adjusted diagram -->
