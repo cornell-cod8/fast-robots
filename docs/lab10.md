@@ -74,6 +74,8 @@ This function takes in an array of true observations for a particular robot pose
 
 This function performs the update step in loc.bel based on loc.bel_bar and the sensor model. Iterating through nonzero grid elements, beliefs are updated by multiplying the prior with the data from the sensor model. Note loc.bel is normalized here. 
 
+![update_step formula](./lab10/update_step_formula.png)
+
 ![update_step](./lab10/update_step.png)
 
 ## Results
