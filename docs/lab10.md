@@ -18,7 +18,7 @@ Using this, I wrote some basic movement functions. The velocity commands last in
 
 Then, I wrote a loop that performed the necessary commands.
 
-![square loop](./lab10/square%20loop.png.png)
+![square loop](./lab10/square_loop.png)
 
 In testing, the robot did not always execute the same exact shape. There were inconsistencies from minor timing variations between delay commands; additionally, the rotation was not a perfect 90-degree angle (possibly impacted by float rounding error). The robot deviated from the intended path over time. 
 
@@ -60,7 +60,7 @@ This function takes in current and previous odometry poses and a control input a
 
 This function takes in current and previous odometry poses to complete the prediction step. Again following formulas from lecture, I iterated over the grid elements and summed the probability of each way a previous control input from another grid element could terminate in the current element. I normalize the belief grid to avoid floating-point underflow.
 
-![prediction_step formula](./lab10/prediction_step_formula.png.png)
+![prediction_step formula](./lab10/prediction_step_formula.png)
 
 ![prediction_step](./lab10/prediction_step.png)
 
