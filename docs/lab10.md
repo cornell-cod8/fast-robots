@@ -1,4 +1,4 @@
-# Objective 
+# Lab 10
 
 The objective of this lab is to implement grid localization using Bayes filter.
 
