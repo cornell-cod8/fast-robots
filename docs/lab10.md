@@ -20,7 +20,7 @@ Then, I wrote a loop that performed the necessary commands.
 
 ![square loop](./lab10/square_loop.png)
 
-In testing, the robot did not always execute the same exact shape. There were inconsistencies from minor timing variations between delay commands; additionally, the rotation was not a perfect 90-degree angle (possibly impacted by float rounding error). The robot deviated from the intended path over time. 
+In testing, the robot did not always execute the same exact shape. There were inconsistencies from minor timing variations between delay commands; additionally, the rotation was not a perfect 90-degree angle. The robot deviated from the intended path over time. 
 
 <!-- TODO: open loop video -->
 
@@ -32,9 +32,9 @@ For this task, the robot needed a closed-loop obstacle avoidance algorithm. Usin
 
 Since the world was constructed with 90-degree corners, I had the robot turn 90 degrees. I saw reasonably collision avoidance at my original speed of 1 m/s, and, maintaining a threshold of 0.5 meter, I was able to reach _ m/s with minimal collisions. 
 
-The closest distance the robot can be from an obstacle is dependent on the robot's dimensions. Because the sensor is not on the point on the robot which is farthest from its center of rotation (which would be its corners), the robot cannot avoid a collision at a distance of 0 meters. It doesn't seem like the robot's dimensions are given, but the lower limit for distance to the nearest obstacle would just be half the square root of the squared sum of the dimensions. 
+Because the sensor is not on the point on the robot which is farthest from its center of rotation (which would be its corners), the robot cannot avoid a collision at a distance of 0 meters. The closest distance the robot can be from an obstacle is dependent on the robot's dimensions. 
 
-This obstacle avoidance code would fail to observe how close it is to an object to its left or right, so when it rotates to either side, it risks having its corners collide with an unseen object. This could be corrected by having distances sensors on the left and right sides of the robot to see those obstacles and act accordingly. 
+This algorithm ignores lateral obstacles, which could cause collisions during turns. This could be corrected by having distances sensors on the left and right sides of the robot to see those obstacles and act accordingly. 
 
 <!-- TODO: closed loop video -->
 
@@ -58,7 +58,7 @@ This function takes in current and previous odometry poses and a control input a
 
 ### prediction_step
 
-This function takes in current and previous odometry poses to complete the prediction step. Again following formulas from lecture, I iterated over the grid elements and summed the probability of each way a previous control input from another grid element could terminate in the current element. I normalize the belief grid to avoid floating-point underflow.
+This function takes in current and previous odometry poses to complete the prediction step. I iterated over the grid elements and summed the probability of each way a previous control input from another grid element could terminate in the current element. I normalize the belief grid to avoid floating-point underflow.
 
 ![prediction_step formula](./lab10/prediction_step_formula.png)
 
