@@ -84,7 +84,7 @@ This function performs the update step in loc.bel based on loc.bel_bar and the s
 
 With grid localization now fully implemented, I used the provided test script to evaluate performance. Based on the video screencapture and final grid screenshot below, the Bayes filter in blue seemed reasonably accurate to the true position in green in spite of very noisy sensor readings in red. This executed in ~60 seconds, which seemed like satisfactory computation time, so I made no further optimizations. 
 
-![localization graph](localization.png)
+![localization graph](./lab10/localization.png)
 
 <!-- video url: https://youtu.be/4U_wVl6akMM -->
 [![closed loop video](https://img.youtube.com/vi/4U_wVl6akMM/0.jpg)](https://www.youtube.com/watch?v=4U_wVl6akMM)
