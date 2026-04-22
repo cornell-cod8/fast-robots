@@ -22,7 +22,8 @@ Then, I wrote a loop that performed the necessary commands.
 
 In testing, the robot did not always execute the same exact shape. There were inconsistencies from minor timing variations between delay commands; additionally, the rotation was not a perfect 90-degree angle. The robot deviated from the intended path over time. 
 
-<!-- TODO: open loop video -->
+<!-- video url: https://youtu.be/wqJZUglvJyc -->
+[![open loop video](https://img.youtube.com/vi/wqJZUglvJyc/0.jpg)](https://www.youtube.com/watch?v=wqJZUglvJyc)
 
 ### 2. Closed Loop Control
 
@@ -30,13 +31,14 @@ For this task, the robot needed a closed-loop obstacle avoidance algorithm. Usin
 
 ![closed loop](./lab10/closed_loop.png)
 
-Since the world was constructed with 90-degree corners, I had the robot turn 90 degrees. I saw reasonably collision avoidance at my original speed of 1 m/s, and, maintaining a threshold of 0.5 meter, I was able to reach _ m/s with minimal collisions. 
+Since the world was constructed with 90-degree corners, I had the robot turn 90 degrees. I was able to avoid most collisions at my original speed of 1 m/s while maintaining a threshold of 0.5 meter, but I wasn't able to increase the speed very much without sacrificing collision frequency. 
 
 Because the sensor is not on the point on the robot which is farthest from its center of rotation (which would be its corners), the robot cannot avoid a collision at a distance of 0 meters. The closest distance the robot can be from an obstacle is dependent on the robot's dimensions. 
 
 This algorithm ignores lateral obstacles, which could cause collisions during turns. This could be corrected by having distances sensors on the left and right sides of the robot to see those obstacles and act accordingly. 
 
-<!-- TODO: closed loop video -->
+<!-- video url: https://youtu.be/zPP4ZTQRWqE -->
+[![closed loop video](https://img.youtube.com/vi/zPP4ZTQRWqE/0.jpg)](https://www.youtube.com/watch?v=zPP4ZTQRWqE)
 
 ## Lab Tasks
 
@@ -72,7 +74,7 @@ This function takes in an array of true observations for a particular robot pose
 
 ### update_step
 
-This function performs the update step in loc.bel based on loc.bel_bar and the sensor model. Iterating through nonzero grid elements, beliefs are updated by multiplying the prior with the data from the sensor model. Note loc.bel is normalized here. 
+This function performs the update step in loc.bel based on loc.bel_bar and the sensor model. Iterating through nonzero grid elements, beliefs are updated using prior and the sensor model data, then normalized. 
 
 ![update_step formula](./lab10/update_step_formula.png)
 
@@ -80,6 +82,9 @@ This function performs the update step in loc.bel based on loc.bel_bar and the s
 
 ## Results
 
-With grid localization now fully implemented, I used the provided test script to evaluate performance. Based on the video screencapture and final grid screenshot below, the Bayes filter in blue seemed reasonably accurate to the true position in green in spite of very noisy sensor readings in red. This executed in ~60-80 seconds, which seemed like satisfactory computation time, so I made no further optimizations. 
+With grid localization now fully implemented, I used the provided test script to evaluate performance. Based on the video screencapture and final grid screenshot below, the Bayes filter in blue seemed reasonably accurate to the true position in green in spite of very noisy sensor readings in red. This executed in ~60 seconds, which seemed like satisfactory computation time, so I made no further optimizations. 
 
-<!-- TODO: insert video + resulting screenshot -->
+![localization graph](localization.png)
+
+<!-- video url: https://youtu.be/4U_wVl6akMM -->
+[![closed loop video](https://img.youtube.com/vi/4U_wVl6akMM/0.jpg)](https://www.youtube.com/watch?v=4U_wVl6akMM)
