@@ -37,8 +37,8 @@ My initial run bore pretty poor results... it seems like the same off-world poin
 ![plot at pose 1](./lab11/plot0.png)
 ![prediction at pose 1](./lab11/point0.png)
 ![control data at pose 1](./lab11/control0.png)
-<!-- URL: https://youtu.be/EUMYOFq74F8 -->
-[![pose 1 video](https://img.youtube.com/vi/EUMYOFq74F8/0.jpg)](https://www.youtube.com/watch?v=EUMYOFq74F8)
+<!-- URL: https://youtu.be/VjgTUMwF4ng -->
+[![pose 1 video](https://img.youtube.com/vi/VjgTUMwF4ng/0.jpg)](https://www.youtube.com/watch?v=VjgTUMwF4ng)
 
 <!-- ### Pose 2: (0 ft, 3 ft, 0 deg)
 ![plot at pose 2](./lab11/plot1.png)
@@ -51,15 +51,15 @@ URL: https://youtu.be/wt3LWKJ2d_4
 ![plot at pose 3](./lab11/plot2.png)
 ![prediction at pose 3](./lab11/point2.png)
 ![control data at pose 3](./lab11/control2.png)
-<!-- URL: https://youtu.be/er7yIC7qZ_Y -->
-[![pose 3 video](https://img.youtube.com/vi/er7yIC7qZ_Y/0.jpg)](https://www.youtube.com/watch?v=er7yIC7qZ_Y)
+<!-- URL: https://youtu.be/SQO9QNAHMnI -->
+[![pose 3 video](https://img.youtube.com/vi/SQO9QNAHMnI/0.jpg)](https://www.youtube.com/watch?v=SQO9QNAHMnI)
 
 ### Pose 4: (5 ft, 3 ft, 0 deg)
 ![plot at pose 4](./lab11/plot3.png)
 ![prediction at pose 4](./lab11/point3.png)
 ![control data at pose 4](./lab11/control3.png)
-<!-- URL: https://youtu.be/VOLa8z1LBg4 -->
-[![pose 4 video](https://img.youtube.com/vi/VOLa8z1LBg4/0.jpg)](https://www.youtube.com/watch?v=VOLa8z1LBg4)
+<!-- URL: https://youtu.be/2ZnHffRjMTA -->
+[![pose 4 video](https://img.youtube.com/vi/2ZnHffRjMTA/0.jpg)](https://www.youtube.com/watch?v=2ZnHffRjMTA)
 
 The first issue is with the data itself. It seems that the robot is returning negative values in the observation data. Aside from a conversion from millimeters to meters, there is no additional data processing occurring once the data from the Artemis board reaches my laptop, so this is most likely an issue carrying over from Lab 9. There also may have been a confounding factor in taking data measurements with other robots on the field; for instance, detecting another robot at Pose 4 as a wall while taking measurements at Pose 3 would make the negative-y wall seem closer than expected. However, as this would have only affected at most two distance measurements due to the layout of the map, this would have little effect on the shape of the data, but a false corner detection would impact state prediction.  
 
