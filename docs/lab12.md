@@ -4,7 +4,9 @@ The objective of this lab is to balance the robot on two wheels in an inverted p
 
 ## Approach
 
-We chose to start the robot in the upright position and stabilize it with a PD controller, rather than attempting to drive forward and flip into a wheelie. This allowed us to focus on tuning the balance controller without also needing to time the flip correctly. One person holds the robot upright while another runs the BALANCE command from the Jupyter notebook, which provides a three-second countdown before activating the controller. At the moment the command is received, the firmware zeroes the integrated pitch so the current orientation becomes the setpoint at 0 degrees.
+We chose to start the robot in the upright position and stabilize it with a PD controller, rather than attempting to drive forward and flip into a wheelie. This allowed us to focus on tuning the balance controller without also needing to time the flip correctly. We also chose to add some weight to the base of the robot (we added some screws to the battery compartment) for more stability.
+
+For our experimental setup, one person holds the robot upright while another runs the BALANCE command from the Jupyter notebook, which provides a three-second countdown before activating the controller. At the moment the command is received, the firmware zeroes the integrated pitch so the current orientation becomes the setpoint at 0 degrees.
 
 ## Controller
 
@@ -47,7 +49,7 @@ The proportional term provides a restoring force proportional to the tilt angle.
 
 An inverted pendulum is inherently unstable. When the robot tilts by angle θ from vertical, gravity exerts a torque proportional to sin(θ) that pulls it further from the upright position. For small angles, sin(θ) can be approximated as θ, yielding a linearized equation of motion:
 
-![equation of motion](./lab12/dynamics\_equation.png)
+![equation of motion](./lab12/dynamics.png)
 
 (Here, g is gravitational acceleration, L is the effective pendulum length from the axle to the center of mass, and u is the corrective acceleration from the wheels.)
 
@@ -87,10 +89,20 @@ One firmware fix was required. The GET\_PID\_LOG handler in commands.cpp was sen
 
 ## Results
 
-Below is a video of the robot balancing:
+Below are videos of three attempts at balancing the robot, as well as corresponding motor input and IMU pitch measurement data:
 
-<!-- TODO: Replace with your YouTube video ID -->
-[![Balance video](https://img.youtube.com/vi/TODO_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=TODO_VIDEO_ID)
+### Attempt 1
+[![video 1](https://img.youtube.com/vi/kW2kspywVE0/0.jpg)](https://www.youtube.com/watch?v=kW2kspywVE0)
+![data set 1](./lab12/output1.png)
+
+### Attempt 2
+[![video 1](https://img.youtube.com/vi/kW2kspywVE0/0.jpg)](https://www.youtube.com/watch?v=kW2kspywVE0)
+![data set 2](./lab12/ljcb7139238.png)
+
+### Attempt 3
+[![video 1](https://img.youtube.com/vi/kW2kspywVE0/0.jpg)](https://www.youtube.com/watch?v=kW2kspywVE0)
+![data set 3](./lab12/naVSANFXoSs.png)
+
 
 The best run achieved approximately 7 seconds of balancing. The robot remained upright with visible twitching as the controller made small corrections. Within about 10 degrees of the setpoint, the corrections were quick and consistent. Beyond that range, recovery became unreliable, and the robot eventually tipped too far to one side and fell. The fall was almost always to the left, suggesting a possible mechanical asymmetry in the chassis or wheel friction, or a small accumulated bias in the gyro integration.
 
