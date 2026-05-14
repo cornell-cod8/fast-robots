@@ -104,15 +104,7 @@ Below are videos of three attempts at balancing the robot, as well as correspond
 ![data set 3](./lab12/naVSANFXoSs.png)
 
 
-The best run achieved approximately 7 seconds of balancing. The robot remained upright with visible twitching as the controller made small corrections. Within about 10 degrees of the setpoint, the corrections were quick and consistent. Beyond that range, recovery became unreliable, and the robot eventually tipped too far to one side and fell. The fall was almost always to the left, suggesting a possible mechanical asymmetry in the chassis or wheel friction, or a small accumulated bias in the gyro integration.
-
-Below are the pitch angle and motor command plots from the run:
-
-![Pitch angle and motor command](./lab12/L12_balance_plot.png)
-
-Below is the tracking error relative to the 0-degree setpoint:
-
-![Tracking error](./lab12/L12_error_plot.png)
+The best run achieved approximately 5 seconds of balancing. The robot remained upright with visible twitching as the controller made small corrections. Within about 10 degrees of the setpoint, the corrections were quick and consistent. Beyond that range, recovery became unreliable, and the robot eventually tipped too far to one side and fell. The fall was almost always to the left, suggesting a possible mechanical asymmetry in the chassis or wheel friction, or a small accumulated bias in the gyro integration.
 
 ## Discussion
 
