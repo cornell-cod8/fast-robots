@@ -29,3 +29,5 @@ It's been a long time since I've done any web design, so I'm not too proud of th
 [Lab 10](lab10.md)
 
 [Lab 11](lab11.md)
+
+[Lab 12](lab12.md)
